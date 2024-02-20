@@ -6,11 +6,7 @@ type Offers = {
 }
 
 function showCitiesCards(count: number): React.JSX.Element[] {
-  const citiesCards: React.JSX.Element[] = [];
-  for (let i: number = 1; i <= count; ++i) {
-    citiesCards.push(<CitiesCard />);
-  }
-  return citiesCards.map((citiesCard) => citiesCard);
+  return new Array(count).fill(<CitiesCard />) as React.JSX.Element[];
 }
 
 function MainPage({count}: Offers): React.JSX.Element {
