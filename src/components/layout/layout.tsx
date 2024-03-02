@@ -1,12 +1,15 @@
 import React from 'react';
-import {Link, Outlet, useLocation} from 'react-router-dom';
+import {Outlet, useLocation} from 'react-router-dom';
 import {AppRoutes} from '../../const';
 import HeaderNav from './header-nav';
+import Header from './header';
+import Footer from './footer';
 
 const getLayoutState = (pathname: AppRoutes) => {
   let pageClassName: string = 'page';
   let logoLinkClassName: string = 'header__logo-link';
   let headerNav: React.JSX.Element | null = <HeaderNav />;
+  let footer: React.JSX.Element | null = null;
 
   if (pathname === AppRoutes.Main) {
     pageClassName += ' page--gray page--main';
@@ -14,30 +17,22 @@ const getLayoutState = (pathname: AppRoutes) => {
   } else if (pathname === AppRoutes.Login) {
     pageClassName += ' page--gray page--login';
     headerNav = null;
+  } else if (pathname === AppRoutes.Favorites) {
+    footer = <Footer />;
   }
 
-  return {pageClassName, logoLinkClassName, headerNav};
+  return {pageClassName, logoLinkClassName, headerNav, footer};
 };
 
 export default function Layout(): React.JSX.Element {
   const {pathname} = useLocation();
-  const {pageClassName, logoLinkClassName, headerNav} = getLayoutState(pathname as AppRoutes);
+  const {pageClassName, logoLinkClassName, headerNav, footer} = getLayoutState(pathname as AppRoutes);
 
   return (
     <div className={pageClassName}>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className={logoLinkClassName} to={AppRoutes.Main}>
-                <img className="header__logo" src="../../markup/img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </Link>
-            </div>
-            {headerNav}
-          </div>
-        </div>
-      </header>
+      <Header logoLinkClassName={logoLinkClassName} headerNav={headerNav}/>
       <Outlet />
+      {footer}
     </div>
   );
 }
