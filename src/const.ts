@@ -2,7 +2,8 @@ export enum AppRoutes {
   Main='/',
   Login='/login',
   Favorites='/favorites',
-  Offer='/offer/:id',
+  Offer='/offer',
+  OfferId='/offer/:id',
   Error404='/*',
 }
 

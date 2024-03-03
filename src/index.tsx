@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
+import {generateOffers} from './mocks/offers';
+import {TOffer} from './types';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const offers = {
-  count: 6,
-};
+const offers: TOffer[] = generateOffers(20);
 
 root.render(
   <React.StrictMode>
-    <App count={offers.count}/>
+    <App offers={offers}/>
   </React.StrictMode>
 );
