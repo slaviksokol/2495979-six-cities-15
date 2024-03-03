@@ -24,9 +24,10 @@ function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthSt
               curOffer.images.map((src, index) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <div className="offer__image-wrapper" key={index}>
-                  <img className="offer__image"
-                       src={src}
-                       alt={`Photo ${index}`}
+                  <img
+                    className="offer__image"
+                    src={src}
+                    alt={`Photo ${index}`}
                   />
                 </div>
               ))
@@ -40,8 +41,9 @@ function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthSt
               <h1 className="offer__name">
                 {curOffer.title}
               </h1>
-              <button className={`offer__bookmark-button${curOffer.isFavorite ? ' offer__bookmark-button--active' : ''} button`}
-                      type="button"
+              <button
+                className={`offer__bookmark-button${curOffer.isFavorite ? ' offer__bookmark-button--active' : ''} button`}
+                type="button"
               >
                 <svg className="offer__bookmark-icon" width={31} height={33}>
                   <use xlinkHref="#icon-bookmark"></use>
@@ -112,11 +114,12 @@ function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthSt
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
                 <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                  <img className="offer__avatar user__avatar"
-                       src={curOffer.host.avatarUrl}
-                       width="74"
-                       height="74"
-                       alt="Host avatar"
+                  <img
+                    className="offer__avatar user__avatar"
+                    src={curOffer.host.avatarUrl}
+                    width="74"
+                    height="74"
+                    alt="Host avatar"
                   />
                 </div>
                 <span className="offer__user-name">

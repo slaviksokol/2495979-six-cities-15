@@ -25,17 +25,18 @@ export default function ReviewForm(): React.JSX.Element {
         {
           rating.map(({value, label}) => (
             <Fragment key={value}>
-              <input className="form__rating-input visually-hidden"
-                     name="rating"
-                     value={value}
-                     id={`${value}-stars`}
-                     type="radio"
-                     onChange={handleChange}
+              <input
+                className="form__rating-input visually-hidden"
+                name="rating"
+                value={value}
+                id={`${value}-stars`}
+                type="radio"
+                onChange={handleChange}
               />
               <label
-                  htmlFor={`${value}-stars`}
-                  className="reviews__rating-label form__rating-label"
-                  title={label}
+                htmlFor={`${value}-stars`}
+                className="reviews__rating-label form__rating-label"
+                title={label}
               >
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star"></use>
@@ -45,11 +46,12 @@ export default function ReviewForm(): React.JSX.Element {
           ))
         }
       </div>
-      <textarea className="reviews__textarea form__textarea"
-                id="review"
-                name="review"
-                placeholder="Tell how was your stay, what you like and what can be improved"
-                onChange={handleChange}
+      <textarea
+        className="reviews__textarea form__textarea"
+        id="review"
+        name="review"
+        placeholder="Tell how was your stay, what you like and what can be improved"
+        onChange={handleChange}
       >
       </textarea>
       <div className="reviews__button-wrapper">
