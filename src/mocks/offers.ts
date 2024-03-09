@@ -1,5 +1,5 @@
 import {TOffer} from '../types';
-import getRandomInt from '../helper/func';
+import {getRandomInt} from '../helper/func';
 
 const cities = [
   {

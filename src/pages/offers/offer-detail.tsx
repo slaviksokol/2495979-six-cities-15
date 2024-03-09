@@ -4,16 +4,15 @@ import {TOffer} from '../../types';
 import Error404 from '../Error404';
 import Reviews from '../../components/review/review';
 import {AuthStatus} from '../../const';
+import {getRatingWidth} from '../../helper/func';
 
 function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthStatus}): React.JSX.Element {
   const {id} = useParams();
-  const curOffer: TOffer | undefined = offers.find((offer: TOffer) => offer.id === id);
+  const curOffer = offers.find((offer: TOffer) => offer.id === id);
 
   if (!curOffer) {
     return <Error404 type='offer'/>;
   }
-
-  const ratingWidth = `${curOffer.rating * (100 / 5)}%`;
 
   return (
     <main className="page__main page__main--offer">
@@ -22,8 +21,7 @@ function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthSt
           <div className="offer__gallery">
             {
               curOffer.images.map((src, index) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <div className="offer__image-wrapper" key={index}>
+                <div className="offer__image-wrapper" key={src}>
                   <img
                     className="offer__image"
                     src={src}
@@ -53,7 +51,7 @@ function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthSt
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
-                <span style={{width: ratingWidth}}></span>
+                <span style={{width: getRatingWidth(curOffer.rating)}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="offer__rating-value rating__value">

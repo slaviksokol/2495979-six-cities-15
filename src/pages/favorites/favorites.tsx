@@ -26,8 +26,7 @@ function Favorites({offers}: {offers: TOffer[]}): React.JSX.Element {
           <ul className="favorites__list">
             {
               offersByCity.map((city) => (
-                // eslint-disable-next-line react/jsx-key
-                <FavoriteGroupCity cityName={city.cityName} offers={city.offers} />
+                <FavoriteGroupCity key={city.cityName} cityName={city.cityName} offers={city.offers} />
               )) as React.JSX.Element[]
             }
           </ul>

@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {TOffer} from '../../types';
 import {AppRoutes} from '../../const';
+import {getRatingWidth} from '../../helper/func';
 
 type TOfferCardProps = {
   offer: TOffer;
@@ -29,8 +30,6 @@ export default function OfferCard({offer, handleHover}: TOfferCardProps): React.
       handleHover();
     }
   };
-
-  const ratingWidth = `${offer.rating * (100 / 5)}%`;
 
   return (
     <article
@@ -67,7 +66,7 @@ export default function OfferCard({offer, handleHover}: TOfferCardProps): React.
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: ratingWidth}}></span>
+            <span style={{width: getRatingWidth(offer.rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
