@@ -3,32 +3,31 @@ import {AppRoutes, AuthStatus} from '../../const';
 import Main from '../../pages/main/main';
 import Error404 from '../../pages/Error404';
 import Login from '../../pages/login/login';
-import Offer from '../../pages/offer/offer';
+import OfferDetail from '../../pages/offers/offer-detail';
 import Favorites from '../../pages/favorites/favorites';
 import Layout from '../layout/layout';
 import PrivateRoute from '../private-route/private-route';
+import {TOffer} from '../../types';
 
-type Offers = {
-  count: number;
-};
+const isAuth:AuthStatus = AuthStatus.Auth;
 
-export function App({count}: Offers) {
+export function App({offers}: {offers: TOffer[]}) {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoutes.Main} element={<Layout />}>
-          <Route index element={<Main count={count} />}/>
+          <Route index element={<Main offers={offers} />}/>
           <Route path={AppRoutes.Login} element={<Login />}/>
           <Route
             path={AppRoutes.Favorites}
             element={(
-              <PrivateRoute authStatus={AuthStatus.Auth}>
-                <Favorites />
+              <PrivateRoute authStatus={isAuth}>
+                <Favorites offers={offers.filter((offer) => offer.isFavorite)} />
               </PrivateRoute>
             )}
           />
-          <Route path={AppRoutes.Offer} element={<Offer />}/>
-          <Route path={AppRoutes.Error404} element={<Error404 />}/>
+          <Route path={AppRoutes.OfferId} element={<OfferDetail offers={offers} authStatus={isAuth} />}/>
+          <Route path={AppRoutes.Error404} element={<Error404 type='default'/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
