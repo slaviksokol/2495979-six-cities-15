@@ -31,6 +31,32 @@ const createOffer = (index: number): TOffer => {
       `https://source.unsplash.com/random/300×300?sig=${String(index)}3&apartment`,
     ],
     maxAdults: getRandomInt(1, 5),
+    reviews: [
+      {
+        id: getRandomInt(1, 50),
+        avatarUrl: `https://source.unsplash.com/random/74x74/?user&sid=${String(getRandomInt(1, 50))}`,
+        name: `Vasya ${getRandomInt(1, 9)}`,
+        rate: getRandomInt(0, 5),
+        message: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
+        date: `April ${getRandomInt(2015, 2024)}`,
+      },
+      {
+        id: getRandomInt(1, 50),
+        avatarUrl: `https://source.unsplash.com/random/74x74/?user&sid=${String(getRandomInt(1, 50))}`,
+        name: `Vasya ${getRandomInt(1, 9)}`,
+        rate: getRandomInt(0, 5),
+        message: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
+        date: `April ${getRandomInt(2015, 2024)}`,
+      },
+      {
+        id: getRandomInt(1, 50),
+        avatarUrl: `https://source.unsplash.com/random/74x74/?user&sid=${String(getRandomInt(1, 50))}`,
+        name: `Vasya ${getRandomInt(1, 9)}`,
+        rate: getRandomInt(0, 5),
+        message: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
+        date: `April ${getRandomInt(2015, 2024)}`,
+      },
+    ]
   };
 };
 

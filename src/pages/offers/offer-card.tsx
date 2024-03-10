@@ -13,7 +13,8 @@ export default function OfferCard({offer, handleHover}: TOfferCardProps): React.
   const {pathname} = useLocation() as {pathname: AppRoutes};
   let classCard = 'cities';
 
-  if (pathname === AppRoutes.OfferId) {
+  const offerIdPageRegExp = /\/offer\/[\d+]/g;
+  if (offerIdPageRegExp.test(pathname)) {
     classCard = 'near-places';
   } else if (pathname === AppRoutes.Favorites) {
     classCard = 'favorites';

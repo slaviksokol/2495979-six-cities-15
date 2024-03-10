@@ -11,8 +11,8 @@ export function getRandomFloat(min: number, max: number): number {
 }
 
 export function getRandomLocationByCity({location}: TCity): TLocationCoordinates {
-  const minStepCoordinate: number = -0.01;
-  const maxStepCoordinate: number = 0.01;
+  const minStepCoordinate: number = -0.02;
+  const maxStepCoordinate: number = 0.02;
   const coordinates = location;
   coordinates.latitude += getRandomFloat(minStepCoordinate, maxStepCoordinate);
   coordinates.longitude += getRandomFloat(minStepCoordinate, maxStepCoordinate);

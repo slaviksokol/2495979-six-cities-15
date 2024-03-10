@@ -6,9 +6,10 @@ import LocationItem from './location-item';
 type TLocationList = {
   offers: TOffer[];
   activeCity: TCity;
+  onCityItemClick: (city: TCity) => void;
 }
 
-export default function LocationList({offers, activeCity}: TLocationList): React.JSX.Element {
+export default function LocationList({offers, activeCity, onCityItemClick}: TLocationList): React.JSX.Element {
   const offersByCity = getOffersByCity(offers);
 
   return (
@@ -16,7 +17,12 @@ export default function LocationList({offers, activeCity}: TLocationList): React
       <ul className="locations__list tabs__list">
         {
           offersByCity.map((group) => (
-            <LocationItem key={group.city.name} city={group.city} activeCity={activeCity} />
+            <LocationItem
+              key={group.city.name}
+              city={group.city}
+              activeCity={activeCity}
+              onCityItemClick={onCityItemClick}
+            />
           ))
         }
       </ul>
