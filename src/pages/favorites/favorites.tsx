@@ -1,22 +1,10 @@
 import React from 'react';
 import {TOffer} from '../../types';
 import FavoriteGroupCity from './favorite-group-city';
-
-type TOffersByCity = {
-  cityName: string;
-  offers: TOffer[];
-}
+import {getOffersByCity} from '../../utils/func';
 
 function Favorites({offers}: {offers: TOffer[]}): React.JSX.Element {
-  const offersByCity: TOffersByCity[] = [];
-  offers.forEach((offer) => {
-    const cityIndex:number = offersByCity.findIndex((city) => city.cityName === offer.city.name);
-    if (cityIndex !== -1) {
-      offersByCity[cityIndex].offers.push(offer);
-    } else {
-      offersByCity.push({cityName: offer.city.name, offers: [offer]});
-    }
-  });
+  const offersByCity = getOffersByCity(offers);
 
   return (
     <main className="page__main page__main--favorites">
@@ -25,8 +13,8 @@ function Favorites({offers}: {offers: TOffer[]}): React.JSX.Element {
           <h1 className="favorites__title">Saved listing</h1>
           <ul className="favorites__list">
             {
-              offersByCity.map((city) => (
-                <FavoriteGroupCity key={city.cityName} cityName={city.cityName} offers={city.offers} />
+              offersByCity.map((group) => (
+                <FavoriteGroupCity key={group.city.name} city={group.city} offers={group.offers} />
               )) as React.JSX.Element[]
             }
           </ul>
