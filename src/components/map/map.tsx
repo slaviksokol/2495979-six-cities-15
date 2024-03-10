@@ -31,7 +31,7 @@ export default function Map({offers, activeOffer, activeCity}: TMap): React.JSX.
           },
           {icon: activeOffer && offer.id === activeOffer.id ? currentCustomIcon : defaultCustomIcon}
         )
-        .addTo(map);
+          .addTo(map);
       });
     }
   }, [map, offers, activeOffer]);
