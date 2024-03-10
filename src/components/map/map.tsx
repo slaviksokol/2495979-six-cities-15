@@ -24,7 +24,8 @@ export default function Map({offers, activeOffer, activeCity}: TMap): React.JSX.
   useEffect((): void => {
     if (map) {
       offers.forEach((offer) => {
-        leaflet.marker({
+        leaflet.marker(
+          {
             lat: offer.location.latitude,
             lng: offer.location.longitude
           },
