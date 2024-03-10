@@ -8,7 +8,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const offers: TOffer[] = generateOffers(20);
+const offers: TOffer[] = generateOffers(50);
 
 root.render(
   <React.StrictMode>

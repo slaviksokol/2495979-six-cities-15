@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {TOffer} from '../../types';
 import {AppRoutes} from '../../const';
-import {getRatingWidth} from '../../helper/func';
+import {getRatingWidth} from '../../utils/func';
 
 type TOfferCardProps = {
   offer: TOffer;

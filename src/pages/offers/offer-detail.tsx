@@ -4,7 +4,7 @@ import {TOffer} from '../../types';
 import Error404 from '../Error404';
 import Reviews from '../../components/review/review';
 import {AuthStatus} from '../../const';
-import {getRatingWidth} from '../../helper/func';
+import {getRatingWidth} from '../../utils/func';
 
 function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthStatus}): React.JSX.Element {
   const {id} = useParams();

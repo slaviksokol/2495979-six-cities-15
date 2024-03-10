@@ -1,19 +1,14 @@
 import React from 'react';
 import OfferCard from '../offers/offer-card';
-import {TOffer} from '../../types';
+import {TOffersByCity} from '../../types';
 
-type TFavoriteGroupCityParams = {
-  cityName: string;
-  offers: TOffer[];
-}
-
-export default function FavoriteGroupCity({cityName, offers}: TFavoriteGroupCityParams): React.JSX.Element {
+export default function FavoriteGroupCity({city, offers}: TOffersByCity): React.JSX.Element {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
           <a className="locations__item-link" href="#">
-            <span>{cityName}</span>
+            <span>{city.name}</span>
           </a>
         </div>
       </div>
