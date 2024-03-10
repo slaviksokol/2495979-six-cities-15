@@ -27,6 +27,7 @@ function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthSt
       nearOffers.push(offer);
     }
   }
+  const nearOffersMap = [curOffer, ...nearOffers];
 
   return (
     <main className="page__main page__main--offer">
@@ -153,7 +154,7 @@ function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthSt
             </section>
           </div>
         </div>
-        <Map className="offer__map" activeOffer={curOffer} offers={nearOffers} activeCity={curOffer.city} />
+        <Map className="offer__map" activeOffer={curOffer} offers={nearOffersMap} activeCity={curOffer.city} />
       </section>
       <OffersList offers={nearOffers} activeCity={curOffer.city} nameBlock="Other places in the neighbourhood" />
     </main>
