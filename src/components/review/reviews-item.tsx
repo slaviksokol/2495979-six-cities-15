@@ -20,7 +20,7 @@ export default function ReviewsItem({review}: TReviewItem): React.JSX.Element {
           />
         </div>
         <span className="reviews__user-name">
-            {review.name}
+          {review.name}
         </span>
       </div>
       <div className="reviews__info">
