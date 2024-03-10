@@ -23,7 +23,7 @@ export default function Map({className, offers, activeOffer, activeCity}: TMap):
       markerLayer.current.addTo(map);
       markerLayer.current.clearLayers();
     }
-  }, [activeCity, map]);
+  }, [activeCity, map, activeOffer]);
 
   useEffect((): void => {
     if (map) {
