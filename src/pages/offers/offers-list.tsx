@@ -3,18 +3,19 @@ import {useLocation} from 'react-router-dom';
 import classNames from 'classnames';
 
 import {AppRoutes} from '../../const';
-import {TCity, TOffer} from '../../types';
+import {TOffer} from '../../types';
 import OfferCard from '../../pages/offers/offer-card';
 import Map from '../../components/map/map';
 import OffersSorting from '../../components/offers/offers-sorting';
+import {useAppSelector} from '../../store';
+import {selectCity, selectOffers} from '../../store/selector';
 
-type TOffersList = {
-  offers: TOffer[];
-  activeCity: TCity;
-  nameBlock: string;
-}
+export default function OffersList({nameBlock}: {nameBlock: string}): React.JSX.Element {
+  const offers = useAppSelector(selectOffers);
+  const activeCity = useAppSelector(selectCity);
 
-export default function OffersList({offers, activeCity, nameBlock}: TOffersList): React.JSX.Element {
+  const offersFiltered = offers.filter((offer) => offer.city === activeCity);
+
   const [activeOffer, setActiveOffer] = useState<TOffer | null>(null);
   const handleHover = (offer?: TOffer) => {
     setActiveOffer(offer || null);
@@ -23,7 +24,7 @@ export default function OffersList({offers, activeCity, nameBlock}: TOffersList)
   useEffect(() => {
     // eslint-disable-next-line no-console
     console.log('component did update');
-  }, [offers]);
+  }, [offersFiltered]);
 
   useEffect(() => {
     // eslint-disable-next-line no-console
@@ -67,12 +68,12 @@ export default function OffersList({offers, activeCity, nameBlock}: TOffersList)
         {
           isMainPage &&
           <>
-            <b className="places__found">{Object.keys(offers).length} places to stay in Amsterdam</b>
+            <b className="places__found">{Object.keys(offersFiltered).length} places to stay in Amsterdam</b>
             <OffersSorting />
           </>
         }
         <div className={classList}>
-          {offers.map((offer) => (
+          {offersFiltered.map((offer) => (
             <OfferCard
               key={offer.id}
               offer={offer}
@@ -84,7 +85,7 @@ export default function OffersList({offers, activeCity, nameBlock}: TOffersList)
       {
         isMainPage &&
         <div className="cities__right-section">
-          <Map className="cities__map" activeOffer={activeOffer} offers={offers} activeCity={activeCity} />
+          <Map className="cities__map" activeOffer={activeOffer} offers={offersFiltered} activeCity={activeCity} />
         </div>
       }
     </div>

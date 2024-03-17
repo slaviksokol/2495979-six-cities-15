@@ -1,28 +1,17 @@
 import React from 'react';
 
-import {getOffersByCity} from '../../utils/func';
-import {TCity, TOffer} from '../../types';
 import LocationItem from './location-item';
+import {TCity} from '../../types';
 
-type TLocationList = {
-  offers: TOffer[];
-  activeCity: TCity;
-  onCityItemClick: (city: TCity) => void;
-}
-
-export default function LocationList({offers, activeCity, onCityItemClick}: TLocationList): React.JSX.Element {
-  const offersByCity = getOffersByCity(offers);
-
+export default function LocationList({cities}: {cities: TCity[]}): React.JSX.Element {
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">
         {
-          offersByCity.map((group) => (
+          cities.map((city) => (
             <LocationItem
-              key={group.city.name}
-              city={group.city}
-              active={group.city === activeCity}
-              onCityItemClick={onCityItemClick}
+              key={city.name}
+              city={city}
             />
           ))
         }
