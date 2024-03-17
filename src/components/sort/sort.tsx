@@ -31,7 +31,6 @@ export default function OffersSorting(): React.JSX.Element {
             <OffersSortItem
               key={sort.code}
               item={sort}
-              className="places__option places__option--active"
             />
           ))
         }

@@ -14,7 +14,7 @@ export const sortOptions: TSortItem[] = [
     name: 'Price: high to Low',
   },
   {
-    code: 'tot_rated_first',
+    code: 'top_rated_first',
     name: 'Top rated first',
   }
 ];

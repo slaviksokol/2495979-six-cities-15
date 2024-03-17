@@ -62,7 +62,9 @@ export function getSortedOffers(offers: TOffer[], sortItem: TSortItem): TOffer[]
       return offers.sort((a, b) => a.price - b.price);
     case 'price_high_to_low':
       return offers.sort((a, b) => b.price - a.price);
-    case 'tot_rated_first':
+    case 'top_rated_first':
       return offers.sort((a, b) => b.rating - a.rating);
+    default:
+      return offers;
   }
 }
