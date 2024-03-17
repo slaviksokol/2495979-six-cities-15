@@ -16,7 +16,7 @@ export function App({offers}: {offers: TOffer[]}) {
     <BrowserRouter>
       <Routes>
         <Route path={AppRoutes.Main} element={<Layout />}>
-          <Route index element={<Main offers={offers} />}/>
+          <Route index element={<Main />}/>
           <Route path={AppRoutes.Login} element={<Login />}/>
           <Route
             path={AppRoutes.Favorites}
