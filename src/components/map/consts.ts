@@ -10,3 +10,5 @@ export const currentCustomIcon = leaflet.icon({
   iconSize: [27, 39],
   iconAnchor: [14, 39],
 });
+
+export const offerIdPageRegExp = /\/offer\/[\d+]/g;

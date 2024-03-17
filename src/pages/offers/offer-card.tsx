@@ -1,8 +1,9 @@
 import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import {TOffer} from '../../types';
+
 import {AppRoutes} from '../../const';
 import {getRatingWidth} from '../../utils/func';
+import {TOffer} from '../../types';
 
 type TOfferCardProps = {
   offer: TOffer;

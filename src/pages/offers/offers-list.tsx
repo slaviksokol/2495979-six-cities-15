@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation} from 'react-router-dom';
-import OfferCard from '../../pages/offers/offer-card';
-import {TCity, TOffer} from '../../types';
-import Map from '../../components/map/map';
 import classNames from 'classnames';
+
 import {AppRoutes} from '../../const';
+import {TCity, TOffer} from '../../types';
+import OfferCard from '../../pages/offers/offer-card';
+import Map from '../../components/map/map';
 import OffersSorting from '../../components/offers/offers-sorting';
 
 type TOffersList = {

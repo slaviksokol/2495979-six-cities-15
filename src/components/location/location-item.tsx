@@ -1,14 +1,15 @@
 import React from 'react';
-import {TCity} from '../../types';
 import classNames from 'classnames';
+
+import {TCity} from '../../types';
 
 type TLocationItem = {
   city: TCity;
-  activeCity: TCity;
+  active: boolean;
   onCityItemClick: (city: TCity) => void;
 }
 
-export default function LocationItem({city, activeCity, onCityItemClick}: TLocationItem): React.JSX.Element {
+export default function LocationItem({city, active, onCityItemClick}: TLocationItem): React.JSX.Element {
   const handleClick = () => {
     onCityItemClick(city);
   };
@@ -19,7 +20,7 @@ export default function LocationItem({city, activeCity, onCityItemClick}: TLocat
       onClick={handleClick}
     >
       <a
-        className={classNames('locations__item-link tabs__item', {'tabs__item--active': city === activeCity})}
+        className={classNames('locations__item-link tabs__item', {'tabs__item--active': active})}
         href="#"
       >
         <span>{city.name}</span>

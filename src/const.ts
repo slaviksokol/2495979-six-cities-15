@@ -11,3 +11,5 @@ export enum AuthStatus {
   Auth='Auth',
   NoAuth='NoAuth',
 }
+
+export const maxNearOffers = 3;

@@ -1,17 +1,20 @@
 import React, {useState} from 'react';
-import OffersList from '../offers/offers-list';
+
 import {TCity, TOffer} from '../../types';
 import {cities} from '../../mocks/cities';
+import OffersList from '../offers/offers-list';
 import LocationList from '../../components/location/location-list';
 
 export default function Main({offers}: {offers: TOffer[]}): React.JSX.Element {
   const [activeCity, setActiveCity] = useState<TCity>(cities[0]);
 
   function onCityItemClick(selectedCity: TCity): void {
-    cities.find((city) => {
+    cities.some((city) => {
       if (city === selectedCity) {
         setActiveCity(selectedCity);
+        return true;
       }
+      return false;
     });
   }
 

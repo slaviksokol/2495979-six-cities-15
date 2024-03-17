@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {getOffersByCity} from '../../utils/func';
 import {TCity, TOffer} from '../../types';
 import LocationItem from './location-item';
@@ -20,7 +21,7 @@ export default function LocationList({offers, activeCity, onCityItemClick}: TLoc
             <LocationItem
               key={group.city.name}
               city={group.city}
-              activeCity={activeCity}
+              active={group.city === activeCity}
               onCityItemClick={onCityItemClick}
             />
           ))

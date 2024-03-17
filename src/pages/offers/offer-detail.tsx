@@ -1,10 +1,11 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
+
+import {AuthStatus} from '../../const';
+import {getRatingWidth, getNearOffers} from '../../utils/func';
 import {TOffer} from '../../types';
 import Error404 from '../Error404';
 import Reviews from '../../components/review/review';
-import {AuthStatus} from '../../const';
-import {getRatingWidth} from '../../utils/func';
 import Map from '../../components/map/map';
 import OffersList from './offers-list';
 
@@ -16,17 +17,7 @@ function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthSt
     return <Error404 type='offer'/>;
   }
 
-  const nearOffers = [];
-  const maxNearOffers = 3;
-  for (const offer of offers) {
-    if (
-      offer.city === curOffer.city
-      && offer.id !== curOffer.id
-      && nearOffers.length < maxNearOffers
-    ) {
-      nearOffers.push(offer);
-    }
-  }
+  const nearOffers = getNearOffers(offers, curOffer);
   const nearOffersMap = [curOffer, ...nearOffers];
 
   return (

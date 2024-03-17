@@ -1,5 +1,5 @@
-import {TCity, TOffer} from '../types';
 import {getRandomInt, getRandomLocationByCity} from '../utils/func';
+import {TCity, TOffer} from '../types';
 import {cities} from './cities';
 
 const createOffer = (index: number): TOffer => {
