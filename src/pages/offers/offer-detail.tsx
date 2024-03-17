@@ -147,7 +147,7 @@ function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthSt
         </div>
         <Map className="offer__map" activeOffer={curOffer} offers={nearOffersMap} activeCity={curOffer.city} />
       </section>
-      <OffersList offers={nearOffers} activeCity={curOffer.city} nameBlock="Other places in the neighbourhood" />
+      <OffersList nameBlock="Other places in the neighbourhood" />
     </main>
   );
 }
