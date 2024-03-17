@@ -49,3 +49,8 @@ export type TOffersByCity = {
   city: TCity;
   offers: TOffer[];
 }
+
+export type TSortItem = {
+  code: string;
+  name: string;
+}
