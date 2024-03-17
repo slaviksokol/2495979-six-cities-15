@@ -17,6 +17,15 @@ export type TCity = {
   location: TLocationCoordinates;
 }
 
+export type TReview = {
+  id: number;
+  avatarUrl: string;
+  name: string;
+  rate: number;
+  message: string;
+  date: string;
+}
+
 export type TOffer = {
   id: string;
   title: string;
@@ -33,6 +42,7 @@ export type TOffer = {
   host: THost;
   images: string[];
   maxAdults: number;
+  reviews: TReview[];
 }
 
 export type TOffersByCity = {

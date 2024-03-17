@@ -5,7 +5,7 @@ export const cities = [
     location: {
       latitude: 55.755864,
       longitude: 37.617698,
-      zoom: 14,
+      zoom: 13,
     }
   },
   {
@@ -14,7 +14,7 @@ export const cities = [
     location: {
       latitude: 59.938784,
       longitude: 30.314997,
-      zoom: 14,
+      zoom: 13,
     }
   },
   {
@@ -23,7 +23,7 @@ export const cities = [
     location: {
       latitude: 54.782635,
       longitude: 32.045287,
-      zoom: 14,
+      zoom: 13,
     }
   },
 ];
