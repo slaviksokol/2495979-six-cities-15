@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useLocation} from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -6,35 +6,23 @@ import {AppRoutes} from '../../const';
 import {TOffer} from '../../types';
 import OfferCard from '../../pages/offers/offer-card';
 import Map from '../../components/map/map';
-import OffersSorting from '../../components/offers/offers-sorting';
 import {useAppSelector} from '../../store';
-import {selectCity, selectOffers} from '../../store/selector';
+import {selectCity, selectOffers, selectSortItem} from '../../store/selector';
+import OffersSorting from '../../components/sort/sort';
+import {getSortedOffers} from '../../utils/func';
 
 export default function OffersList({nameBlock}: {nameBlock: string}): React.JSX.Element {
   const offers = useAppSelector(selectOffers);
   const activeCity = useAppSelector(selectCity);
+  const activeSortItem = useAppSelector(selectSortItem);
 
-  const offersFiltered = offers.filter((offer) => offer.city === activeCity);
+  let offersFiltered = offers.filter((offer) => offer.city === activeCity);
+  offersFiltered = getSortedOffers(offersFiltered, activeSortItem);
 
   const [activeOffer, setActiveOffer] = useState<TOffer | null>(null);
   const handleHover = (offer?: TOffer) => {
     setActiveOffer(offer || null);
   };
-
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('component did update');
-  }, [offersFiltered]);
-
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(activeOffer);
-
-    return () => {
-      // eslint-disable-next-line no-console
-      console.log('Component will unmount');
-    };
-  });
 
   const {pathname} = useLocation() as {pathname: AppRoutes};
 

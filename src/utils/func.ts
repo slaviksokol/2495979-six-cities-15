@@ -1,5 +1,5 @@
 import {maxNearOffers} from '../const';
-import {TCity, TLocationCoordinates, TOffer, TOffersByCity} from '../types';
+import {TCity, TLocationCoordinates, TOffer, TOffersByCity, TSortItem} from '../types';
 
 export function getRandomInt(min: number, max: number): number {
   min = Math.ceil(min);
@@ -52,4 +52,19 @@ export function getNearOffers(offers: TOffer[], curOffer: TOffer): TOffer[] {
     }
   }
   return nearOffers;
+}
+
+export function getSortedOffers(offers: TOffer[], sortItem: TSortItem): TOffer[] {
+  switch (sortItem.code) {
+    case 'popular':
+      return offers;
+    case 'price_low_to_high':
+      return offers.sort((a, b) => a.price - b.price);
+    case 'price_high_to_low':
+      return offers.sort((a, b) => b.price - a.price);
+    case 'top_rated_first':
+      return offers.sort((a, b) => b.rating - a.rating);
+    default:
+      return offers;
+  }
 }
