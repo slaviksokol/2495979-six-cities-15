@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useLocation} from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -23,21 +23,6 @@ export default function OffersList({nameBlock}: {nameBlock: string}): React.JSX.
   const handleHover = (offer?: TOffer) => {
     setActiveOffer(offer || null);
   };
-
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('component did update');
-  }, [offersFiltered]);
-
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(activeOffer);
-
-    return () => {
-      // eslint-disable-next-line no-console
-      console.log('Component will unmount');
-    };
-  });
 
   const {pathname} = useLocation() as {pathname: AppRoutes};
 

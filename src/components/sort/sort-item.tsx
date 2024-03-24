@@ -12,7 +12,7 @@ export default function OffersSortItem({item}: {item: TSortItem}): React.JSX.Ele
   const isActiveSortItem = item === activeSort;
 
   const handleSortItemClick = () => {
-    if (activeSort !== item) {
+    if (!isActiveSortItem) {
       dispatch(changeSortOffers(item));
     }
   };
