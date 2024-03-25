@@ -13,7 +13,7 @@ export default function Main(): React.JSX.Element {
   const statusLoading = useAppSelector(offersSelectors.selectStatusLoading);
   const offers = useAppSelector(offersSelectors.selectOffers);
 
-  const cities = getCitiesFromOffers(offers) ?? [];
+  const cities = getCitiesFromOffers(offers);
 
   const pageMainClass = classNames(
     'page__main page__main--index',

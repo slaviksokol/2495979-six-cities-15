@@ -24,7 +24,7 @@ export default function Layout(): React.JSX.Element {
     pageClassName += ' page--gray page--login';
     headerNav = null;
   } else if (pathname === AppRoutes.Favorites) {
-    if (offers.filter((offer) => offer.isFavorite).length === 0) {
+    if (offers && offers.filter((offer) => offer.isFavorite).length === 0) {
       pageClassName += ' page--favorites-empty';
     }
     footer = <Footer />;

@@ -8,15 +8,13 @@ import {StatusLoading} from '../const';
 import {getCitiesFromOffers} from '../utils/func';
 
 type TOffersState = {
-  city: TCity;
-  offers: TOffer[];
+  city?: TCity;
+  offers?: TOffer[];
   sort: TSortItem;
   statusLoading: StatusLoading;
 }
 
 const initialState: TOffersState = {
-  city: <TCity>[],
-  offers: <TOffer[]>[],
   sort: sortOptions[0],
   statusLoading: StatusLoading.None,
 };
@@ -55,10 +53,10 @@ const offersSlice = createSlice({
 
 const offersActions = offersSlice.actions;
 const offersSelectors = {
-  selectCity: (state: State) => state.city,
-  selectOffers: (state: State) => state.offers,
-  selectSortItem: (state: State) => state.sort,
-  selectStatusLoading: (state: State) => state.statusLoading,
+  selectCity: (state: State) => state.city ?? <TCity>{},
+  selectOffers: (state: State) => state.offers ?? <TOffer[]>[],
+  selectSortItem: (state: State) => state.sort ?? sortOptions[0],
+  selectStatusLoading: (state: State) => state.statusLoading ?? StatusLoading.None,
 };
 
 export {offersSlice, offersActions, offersSelectors};

@@ -16,7 +16,10 @@ export default function OffersList({nameBlock}: {nameBlock: string}): React.JSX.
   const activeCity = useAppSelector(offersSelectors.selectCity);
   const activeSortItem = useAppSelector(offersSelectors.selectSortItem);
 
-  let offersFiltered = offers.filter((offer) => offer.city.name === activeCity.name);
+  let offersFiltered = activeCity
+    ? offers.filter((offer) => offer.city.name === activeCity.name)
+    : offers;
+
   offersFiltered = getSortedOffers(offersFiltered, activeSortItem);
 
   const [activeOffer, setActiveOffer] = useState<TOffer | null>(null);
