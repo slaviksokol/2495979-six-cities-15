@@ -42,7 +42,7 @@ export default function OfferCard({offer, handleHover}: TOfferCardProps): React.
       <div className={`${classCard}__image-wrapper place-card__image-wrapper`}>
         <Link to={`${AppRoutes.Offer}/${offer.id}`}>
           <img className="place-card__image"
-            src={offer.images[0]}
+            src={offer.previewImage}
             width="260"
             height="200"
             style={{width: 260,height: 200}}

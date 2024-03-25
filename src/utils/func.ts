@@ -25,6 +25,10 @@ export function getRatingWidth(rating: number): string {
 }
 
 export function getOffersByCity(offers: TOffer[]): TOffersByCity[] {
+  if (!offers) {
+    return [];
+  }
+
   const offersByCity: TOffersByCity[] = [];
   offers.forEach((offer) => {
     const cityIndex: number = offersByCity.findIndex((group) => group.city.name === offer.city.name);
@@ -36,6 +40,15 @@ export function getOffersByCity(offers: TOffer[]): TOffersByCity[] {
   });
 
   return offersByCity;
+}
+
+export function getCitiesFromOffers(offers: TOffer[]): TCity[] {
+  const cities: TCity[] = [];
+  const offersByCity = getOffersByCity(offers);
+  offersByCity.forEach((city) => {
+    cities.push(city.city);
+  });
+  return cities;
 }
 
 export function getNearOffers(offers: TOffer[], curOffer: TOffer): TOffer[] {

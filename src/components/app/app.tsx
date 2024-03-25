@@ -1,5 +1,7 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
+
 import {AppRoutes, AuthStatus} from '../../const';
+import {useAppSelector} from '../../store';
 import Main from '../../pages/main/main';
 import Error404 from '../../pages/Error404';
 import Login from '../../pages/login/login';
@@ -7,11 +9,13 @@ import OfferDetail from '../../pages/offers/offer-detail';
 import Favorites from '../../pages/favorites/favorites';
 import Layout from '../layout/layout';
 import PrivateRoute from '../private-route/private-route';
-import {TOffer} from '../../types';
+import {offersSelectors} from '../../store/reducer';
 
 const isAuth:AuthStatus = AuthStatus.Auth;
 
-export function App({offers}: {offers: TOffer[]}) {
+export function App() {
+  const offers = useAppSelector(offersSelectors.selectOffers) ?? [];
+
   return (
     <BrowserRouter>
       <Routes>

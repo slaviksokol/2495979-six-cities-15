@@ -25,6 +25,7 @@ const createOffer = (index: number): TOffer => {
       name: 'Host name',
       isPro: !!getRandomInt(0, 1),
     },
+    previewImage: '',
     images: [
       `https://source.unsplash.com/random/300×300?sig=${String(index)}1&apartment`,
       `https://source.unsplash.com/random/300×300?sig=${String(index)}2&apartment`,
