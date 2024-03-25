@@ -13,3 +13,17 @@ export enum AuthStatus {
 }
 
 export const maxNearOffers = 3;
+
+export enum Endpoint {
+  Offers = '/offers',
+  Favorite = '/favorite',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export enum StatusLoading {
+  None,
+  Loading,
+  Success,
+  Failed,
+}

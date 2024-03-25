@@ -4,19 +4,19 @@ import classNames from 'classnames';
 
 import {AppRoutes} from '../../const';
 import {TOffer} from '../../types';
+import {useAppSelector} from '../../store';
+import {offersSelectors} from '../../store/reducer';
 import OfferCard from '../../pages/offers/offer-card';
 import Map from '../../components/map/map';
-import {useAppSelector} from '../../store';
-import {selectCity, selectOffers, selectSortItem} from '../../store/selector';
 import OffersSorting from '../../components/sort/sort';
 import {getSortedOffers} from '../../utils/func';
 
 export default function OffersList({nameBlock}: {nameBlock: string}): React.JSX.Element {
-  const offers = useAppSelector(selectOffers);
-  const activeCity = useAppSelector(selectCity);
-  const activeSortItem = useAppSelector(selectSortItem);
+  const offers = useAppSelector(offersSelectors.selectOffers);
+  const activeCity = useAppSelector(offersSelectors.selectCity);
+  const activeSortItem = useAppSelector(offersSelectors.selectSortItem);
 
-  let offersFiltered = offers.filter((offer) => offer.city === activeCity);
+  let offersFiltered = offers.filter((offer) => offer.city.name === activeCity.name);
   offersFiltered = getSortedOffers(offersFiltered, activeSortItem);
 
   const [activeOffer, setActiveOffer] = useState<TOffer | null>(null);
@@ -30,14 +30,18 @@ export default function OffersList({nameBlock}: {nameBlock: string}): React.JSX.
   const offerIdPageRegExp = /\/offer\/[\d+]/g;
   const isOfferIdPage: boolean = offerIdPageRegExp.test(pathname);
 
+  const issetOffers = offersFiltered.length > 0;
+
   const classContainer = classNames(
     'container',
-    {'cities__places-container': isMainPage}
+    {'cities__places-container': isMainPage},
+    {'cities__places-container--empty': issetOffers}
   );
   const classSection = classNames(
-    'places',
-    {'cities__places': isMainPage},
-    {'near-places': isOfferIdPage}
+    {'places': issetOffers},
+    {'cities__no-places': !issetOffers},
+    {'cities__places': isMainPage && issetOffers},
+    {'near-places': isOfferIdPage && issetOffers}
   );
   const classH2 = classNames(
     {'visually': isMainPage},
@@ -52,28 +56,48 @@ export default function OffersList({nameBlock}: {nameBlock: string}): React.JSX.
   return (
     <div className={classContainer}>
       <section className={classSection}>
-        <h2 className={classH2}>{nameBlock}</h2>
         {
+          issetOffers &&
+          <h2 className={classH2}>{nameBlock}</h2>
+        }
+        {
+          issetOffers &&
           isMainPage &&
           <>
             <b className="places__found">{Object.keys(offersFiltered).length} places to stay in Amsterdam</b>
             <OffersSorting />
           </>
         }
-        <div className={classList}>
-          {offersFiltered.map((offer) => (
-            <OfferCard
-              key={offer.id}
-              offer={offer}
-              handleHover={handleHover}
-            />
-          )) as React.JSX.Element[]}
-        </div>
+        {
+          issetOffers &&
+          <div className={classList}>
+            {offersFiltered.map((offer) => (
+              <OfferCard
+                key={offer.id}
+                offer={offer}
+                handleHover={handleHover}
+              />
+            )) as React.JSX.Element[]}
+          </div>
+        }
+        {
+          !issetOffers &&
+          <div className="cities__status-wrapper tabs__content">
+            <b className="cities__status">No places to stay available</b>
+            <p className="cities__status-description">
+              We could not find any property available at the moment in
+              Dusseldorf
+            </p>
+          </div>
+        }
       </section>
       {
         isMainPage &&
         <div className="cities__right-section">
-          <Map className="cities__map" activeOffer={activeOffer} offers={offersFiltered} activeCity={activeCity} />
+          {
+            issetOffers &&
+            <Map className="cities__map" activeOffer={activeOffer} offers={offersFiltered} activeCity={activeCity} />
+          }
         </div>
       }
     </div>

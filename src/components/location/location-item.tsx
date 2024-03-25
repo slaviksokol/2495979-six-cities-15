@@ -3,17 +3,16 @@ import classNames from 'classnames';
 
 import {TCity} from '../../types';
 import {useAppDispatch, useAppSelector} from '../../store';
-import {changeCity} from '../../store/action';
-import {selectCity} from '../../store/selector';
+import {offersActions, offersSelectors} from '../../store/reducer';
 
 export default function LocationItem({city}: {city: TCity}): React.JSX.Element {
   const dispatch = useAppDispatch();
-  const activeCity = useAppSelector(selectCity);
+  const activeCity = useAppSelector(offersSelectors.selectCity);
   const isActive = activeCity === city;
 
   const handleClick = () => {
     if (!isActive) {
-      dispatch(changeCity(city));
+      dispatch(offersActions.changeCity(city));
     }
   };
 
