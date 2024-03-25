@@ -9,7 +9,7 @@ import Footer from './footer';
 import {useAppSelector} from '../../store';
 
 export default function Layout(): React.JSX.Element {
-  const {pathname} = useLocation() as AppRoutes;
+  const {pathname} = useLocation() as { pathname: AppRoutes };
   const offers = useAppSelector(offersSelectors.selectOffers);
 
   let pageClassName: string = 'page';

@@ -8,15 +8,15 @@ import {StatusLoading} from '../const';
 import {getCitiesFromOffers} from '../utils/func';
 
 type TOffersState = {
-  city: TCity|[];
-  offers: TOffer[]|[];
+  city: TCity;
+  offers: TOffer[];
   sort: TSortItem;
   statusLoading: StatusLoading;
 }
 
 const initialState: TOffersState = {
-  city: [],
-  offers: [],
+  city: <TCity>[],
+  offers: <TOffer[]>[],
   sort: sortOptions[0],
   statusLoading: StatusLoading.None,
 };
