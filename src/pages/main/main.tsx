@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import {offersSelectors} from '../../store/reducer';
-import {useAppSelector} from '../../store';
+import {offersSelectors} from '../../store/slices/offers';
+import {useAppSelector} from '../../store/hooks';
 import OffersList from '../offers/offers-list';
 import LocationList from '../../components/location/location-list';
 import {StatusLoading} from '../../const';
@@ -15,6 +15,10 @@ export default function Main(): React.JSX.Element {
 
   const cities = getCitiesFromOffers(offers);
 
+  if (statusLoading === StatusLoading.Loading) {
+    return <Loader />;
+  }
+
   const pageMainClass = classNames(
     'page__main page__main--index',
     {'page__main--index-empty': offers.length === 0}
@@ -26,11 +30,7 @@ export default function Main(): React.JSX.Element {
         <LocationList cities={cities} />
       </div>
       <div className="cities">
-        {
-          statusLoading === StatusLoading.Loading
-            ? <Loader />
-            : <OffersList nameBlock="Places" />
-        }
+        <OffersList nameBlock="Places" />
       </div>
     </main>
   );

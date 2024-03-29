@@ -1,11 +1,11 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import {TCity, TOffer, TSortItem} from '../types';
-import {sortOptions} from '../components/sort/const';
-import {State} from './state';
-import {fetchOffers} from './thunks/offers';
-import {StatusLoading} from '../const';
-import {getCitiesFromOffers} from '../utils/func';
+import {TCity, TOffer, TSortItem} from '../../types';
+import {sortOptions} from '../../components/sort/const';
+import {State} from '../state';
+import {fetchOffersAction} from '../thunks/offers';
+import {StatusLoading} from '../../const';
+import {getCitiesFromOffers} from '../../utils/func';
 
 type TOffersState = {
   city?: TCity;
@@ -22,10 +22,10 @@ const initialState: TOffersState = {
 const offersSlice = createSlice({
   extraReducers: (builder) =>
     builder
-      .addCase(fetchOffers.pending, (state) => {
+      .addCase(fetchOffersAction.pending, (state) => {
         state.statusLoading = StatusLoading.Loading;
       })
-      .addCase(fetchOffers.fulfilled, (state, action) => {
+      .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.statusLoading = StatusLoading.Success;
         const offers = action.payload;
         if (offers.length) {
@@ -33,7 +33,7 @@ const offersSlice = createSlice({
         }
         state.offers = action.payload;
       })
-      .addCase(fetchOffers.rejected, (state) => {
+      .addCase(fetchOffersAction.rejected, (state) => {
         state.statusLoading = StatusLoading.Failed;
       }),
   initialState,
@@ -47,16 +47,16 @@ const offersSlice = createSlice({
     },
     changeSortOffers: (state, action: PayloadAction<TSortItem>) => {
       state.sort = action.payload;
-    }
+    },
   },
 });
 
-const offersActions = offersSlice.actions;
+const offersActions = {...offersSlice.actions, fetchOffersAction};
 const offersSelectors = {
-  selectCity: (state: State) => state.city ?? <TCity>{},
-  selectOffers: (state: State) => state.offers ?? <TOffer[]>[],
-  selectSortItem: (state: State) => state.sort ?? sortOptions[0],
-  selectStatusLoading: (state: State) => state.statusLoading ?? StatusLoading.None,
+  selectCity: (state: State) => state[offersSlice.name].city ?? <TCity>{},
+  selectOffers: (state: State) => state[offersSlice.name].offers ?? <TOffer[]>[],
+  selectSortItem: (state: State) => state[offersSlice.name].sort ?? sortOptions[0],
+  selectStatusLoading: (state: State) => state[offersSlice.name].statusLoading ?? StatusLoading.None,
 };
 
 export {offersSlice, offersActions, offersSelectors};

@@ -4,17 +4,14 @@ import {Provider} from 'react-redux';
 
 import {store} from './store';
 import App from './components/app/app';
-import {fetchOffers} from './store/thunks/offers';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-store.dispatch(fetchOffers());
-
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider store={store} stabilityCheck="never">
       <App />
     </Provider>
   </React.StrictMode>
