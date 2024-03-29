@@ -31,16 +31,19 @@ export type TOffer = {
   title: string;
   type: TApartmentType;
   price: number;
+  previewImage: string;
   city: TCity;
   location: TLocationCoordinates;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
+}
+
+export type TOfferDetail = TOffer & {
   description: string;
   bedrooms: number;
   goods: string[];
   host: THost;
-  previewImage: string;
   images: string[];
   maxAdults: number;
   reviews: TReview[];
@@ -55,3 +58,16 @@ export type TSortItem = {
   code: string;
   name: string;
 }
+
+export type TAuthData = {
+  email: string;
+  password: string;
+};
+
+export type TUserData = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+  email: string;
+  token: string;
+};

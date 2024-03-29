@@ -4,8 +4,8 @@ import classNames from 'classnames';
 
 import {AppRoutes} from '../../const';
 import {TOffer} from '../../types';
-import {useAppSelector} from '../../store';
-import {offersSelectors} from '../../store/reducer';
+import {useAppSelector} from '../../store/hooks';
+import {offersSelectors} from '../../store/slices/offers';
 import OfferCard from '../../pages/offers/offer-card';
 import Map from '../../components/map/map';
 import OffersSorting from '../../components/sort/sort';

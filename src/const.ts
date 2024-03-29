@@ -10,6 +10,7 @@ export enum AppRoutes {
 export enum AuthStatus {
   Auth='Auth',
   NoAuth='NoAuth',
+  Unknown='Unknown',
 }
 
 export const maxNearOffers = 3;

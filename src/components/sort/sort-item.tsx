@@ -1,18 +1,18 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import {useAppDispatch, useAppSelector} from '../../store';
+import {useActionCreators, useAppSelector} from '../../store/hooks';
 import {TSortItem} from '../../types';
-import {offersActions, offersSelectors} from '../../store/reducer';
+import {offersActions, offersSelectors} from '../../store/slices/offers';
 
 export default function OffersSortItem({item}: {item: TSortItem}): React.JSX.Element {
-  const dispatch = useAppDispatch();
   const activeSort = useAppSelector(offersSelectors.selectSortItem);
   const isActiveSortItem = item === activeSort;
+  const {changeSortOffers} = useActionCreators(offersActions);
 
   const handleSortItemClick = () => {
     if (!isActiveSortItem) {
-      dispatch(offersActions.changeSortOffers(item));
+      changeSortOffers(item);
     }
   };
 

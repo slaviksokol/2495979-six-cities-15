@@ -1,12 +1,12 @@
 import React from 'react';
 import {Outlet, useLocation} from 'react-router-dom';
 
+import {useAppSelector} from '../../store/hooks';
 import {AppRoutes} from '../../const';
-import {offersSelectors} from '../../store/reducer';
+import {offersSelectors} from '../../store/slices/offers';
 import HeaderNav from './header-nav';
 import Header from './header';
 import Footer from './footer';
-import {useAppSelector} from '../../store';
 
 export default function Layout(): React.JSX.Element {
   const {pathname} = useLocation() as { pathname: AppRoutes };
@@ -24,7 +24,7 @@ export default function Layout(): React.JSX.Element {
     pageClassName += ' page--gray page--login';
     headerNav = null;
   } else if (pathname === AppRoutes.Favorites) {
-    if (offers && offers.filter((offer) => offer.isFavorite).length === 0) {
+    if (offers && !offers.some((offer) => offer.isFavorite)) {
       pageClassName += ' page--favorites-empty';
     }
     footer = <Footer />;
