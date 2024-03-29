@@ -8,11 +8,13 @@ import {TUserData} from '../../types';
 type InitialState = {
   authorizationStatus: AuthStatus;
   userData: TUserData | null;
+  statusLoading: StatusLoading;
 }
 
 const initialState: InitialState = {
   authorizationStatus: AuthStatus.Unknown,
-  userData: null
+  userData: null,
+  statusLoading: StatusLoading.None,
 };
 
 const userSlice = createSlice({
@@ -25,15 +27,15 @@ const userSlice = createSlice({
         state.authorizationStatus = AuthStatus.NoAuth;
       })
       .addCase(loginAction.pending, (state) => {
-        state.loginLoadingStatus = StatusLoading.Loading;
+        state.statusLoading = StatusLoading.Loading;
       })
       .addCase(loginAction.fulfilled, (state) => {
         state.authorizationStatus = AuthStatus.Auth;
-        state.loginLoadingStatus = StatusLoading.Success;
+        state.statusLoading = StatusLoading.Success;
       })
       .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthStatus.NoAuth;
-        state.loginLoadingStatus = StatusLoading.Failed;
+        state.statusLoading = StatusLoading.Failed;
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthStatus.NoAuth;

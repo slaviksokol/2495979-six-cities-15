@@ -29,11 +29,8 @@ export default function HeaderNav(): React.JSX.Element {
                 <span className="header__favorite-count">3</span>
               </Link>
             </li>
-            <li
-              className="header__nav-item"
-              to={AppRoutes.Main}
-            >
-              <Link className="header__nav-link">
+            <li className="header__nav-item">
+              <Link className="header__nav-link" to={AppRoutes.Main}>
                 <span className="header__signout" onClick={handleSignOutClick}>Sign out</span>
               </Link>
             </li>

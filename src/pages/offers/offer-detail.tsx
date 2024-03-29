@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom';
 
 import {AuthStatus} from '../../const';
 import {getRatingWidth, getNearOffers} from '../../utils/func';
-import {TOffer} from '../../types';
+import {TOffer, TOfferDetail} from '../../types';
 import Error404 from '../Error404';
 import Reviews from '../../components/review/review';
 import Map from '../../components/map/map';
@@ -11,7 +11,7 @@ import OffersList from './offers-list';
 
 function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthStatus}): React.JSX.Element {
   const {id} = useParams();
-  const curOffer = offers.find((offer: TOffer) => offer.id === id);
+  const curOffer = offers.find((offer: TOffer) => offer.id === id) as TOfferDetail;
 
   if (!curOffer) {
     return <Error404 type='offer'/>;
