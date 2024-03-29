@@ -1,24 +1,52 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 
-import {AuthStatus} from '../../const';
-import {getRatingWidth, getNearOffers} from '../../utils/func';
-import {TOffer, TOfferDetail} from '../../types';
+import {getRatingWidth} from '../../utils/func';
 import Error404 from '../Error404';
 import Reviews from '../../components/review/review';
 import Map from '../../components/map/map';
 import OffersList from './offers-list';
+import {useActionCreators, useAppSelector} from '../../store/hooks';
+import {offerDetailActions, offerDetailSelectors} from '../../store/slices/offer-detail';
+import {StatusLoading} from '../../const';
+import {offersSelectors} from '../../store/slices/offers';
+import {Loader} from '../../components/loader';
+import {commentsActions, commentsSelectors} from '../../store/slices/comments';
+import {TOffer} from "../../types";
 
-function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthStatus}): React.JSX.Element {
+function OfferDetail(): React.JSX.Element {
   const {id} = useParams();
-  const curOffer = offers.find((offer: TOffer) => offer.id === id) as TOfferDetail;
+  const statusLoading = useAppSelector(offersSelectors.selectStatusLoading);
+  const {fetchOfferDetailAction, fetchOffersNearbyAction} = useActionCreators(offerDetailActions);
+  const {fetchCommentsAction} = useActionCreators(commentsActions);
+
+  const offers = useAppSelector(offersSelectors.selectOffers);
+  const curOffer = useAppSelector(offerDetailSelectors.selectOffer);
+  const nearOffers = useAppSelector(offerDetailSelectors.selectOffersNearby);
+  const comments = useAppSelector(commentsSelectors.selectComments);
+
+  useEffect(() => {
+    if (id) {
+      fetchOfferDetailAction(id);
+      fetchOffersNearbyAction(id);
+      fetchCommentsAction(id);
+    }
+  }, [fetchCommentsAction, fetchOfferDetailAction, fetchOffersNearbyAction, id]);
+
+  if (statusLoading === StatusLoading.Loading) {
+    return <Loader />;
+  }
 
   if (!curOffer) {
     return <Error404 type='offer'/>;
   }
 
-  const nearOffers = getNearOffers(offers, curOffer);
-  const nearOffersMap = [curOffer, ...nearOffers];
+  let nearOffersMap = [offers.find((offer) => offer.id === curOffer.id)] as TOffer[];
+  if (nearOffers) {
+    nearOffersMap = [...nearOffersMap, ...nearOffers];
+  }
+
+  const commentsCount = comments ? comments.length : 0;
 
   return (
     <main className="page__main page__main--offer">
@@ -140,14 +168,14 @@ function OfferDetail({offers, authStatus}: {offers: TOffer[]; authStatus: AuthSt
               </div>
             </div>
             <section className="offer__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{curOffer.reviews.length}</span></h2>
-              <Reviews authStatus={authStatus} reviews={curOffer.reviews}/>
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{commentsCount}</span></h2>
+              <Reviews />
             </section>
           </div>
         </div>
-        <Map className="offer__map" activeOffer={curOffer} offers={nearOffersMap} activeCity={curOffer.city} />
+        <Map className="offer__map" activeOffer={curOffer} offers={nearOffersMap} />
       </section>
-      <OffersList nameBlock="Other places in the neighbourhood" />
+      <OffersList nameBlock="Other places in the neighbourhood" offers={nearOffers} isOfferDetail />
     </main>
   );
 }

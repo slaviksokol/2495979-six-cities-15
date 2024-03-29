@@ -1,5 +1,9 @@
-import React, {ReactEventHandler, useState} from 'react';
+import React, {FormEvent, ReactEventHandler, useState} from 'react';
+
 import InputRadio from '../ui/input-radio';
+import {useActionCreators, useAppSelector} from '../../store/hooks';
+import {commentsActions} from '../../store/slices/comments';
+import {offerDetailSelectors} from '../../store/slices/offer-detail';
 
 type TChangeHandler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
@@ -21,8 +25,24 @@ export default function ReviewForm(): React.JSX.Element {
 
   const minTextLength: number = 50;
 
+  const {postCommentAction} = useActionCreators(commentsActions);
+  const curOffer = useAppSelector(offerDetailSelectors.selectOffer);
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    if (curOffer) {
+      postCommentAction({
+        offerId: curOffer.id,
+        commentData: {
+          comment: review.review,
+          rating: Number(review.rating),
+        }
+      });
+    }
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {

@@ -1,20 +1,19 @@
 import React from 'react';
+
 import ReviewList from './review-list';
 import ReviewForm from './review-form';
 import {AuthStatus} from '../../const';
-import {TReview} from '../../types';
+import {useAppSelector} from '../../store/hooks';
+import {userSelectors} from '../../store/slices/user';
 
-type TReviews = {
-  authStatus: AuthStatus;
-  reviews: TReview[];
-}
+export default function Reviews(): React.JSX.Element {
+  const authorizationStatus = useAppSelector(userSelectors.selectAuthStatus);
 
-export default function Reviews({authStatus, reviews}: TReviews): React.JSX.Element {
   return (
     <>
-      <ReviewList reviews={reviews} />
-      {authStatus && <ReviewForm />}
-      {!authStatus && <p>Только авторизованные пользователи могут оставлять комментарии</p>}
+      <ReviewList />
+      {authorizationStatus === AuthStatus.Auth && <ReviewForm />}
+      {authorizationStatus !== AuthStatus.Auth && <p>Only authorized users can leave comments</p>}
     </>
   );
 }

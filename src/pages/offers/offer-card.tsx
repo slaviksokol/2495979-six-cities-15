@@ -8,14 +8,14 @@ import {TOffer} from '../../types';
 type TOfferCardProps = {
   offer: TOffer;
   handleHover?: (offer?: TOffer) => void;
+  isOfferDetail?: boolean;
 }
 
-export default function OfferCard({offer, handleHover}: TOfferCardProps): React.JSX.Element {
+export default function OfferCard({offer, handleHover, isOfferDetail = false}: TOfferCardProps): React.JSX.Element {
   const {pathname} = useLocation() as {pathname: AppRoutes};
   let classCard = 'cities';
 
-  const offerIdPageRegExp = /\/offer\/[\d+]/g;
-  if (offerIdPageRegExp.test(pathname)) {
+  if (isOfferDetail) {
     classCard = 'near-places';
   } else if (pathname === AppRoutes.Favorites) {
     classCard = 'favorites';
