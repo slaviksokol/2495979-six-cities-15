@@ -12,7 +12,7 @@ import {StatusLoading} from '../../const';
 import {offersSelectors} from '../../store/slices/offers';
 import {Loader} from '../../components/loader';
 import {commentsActions, commentsSelectors} from '../../store/slices/comments';
-import {TOffer} from "../../types";
+import {TOffer} from '../../types';
 
 function OfferDetail(): React.JSX.Element {
   const {id} = useParams();
