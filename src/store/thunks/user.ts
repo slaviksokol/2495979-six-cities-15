@@ -13,7 +13,7 @@ export const checkAuthAction = createAsyncThunk<TUserData, void, { extra: AxiosI
   }
 );
 
-export const loginAction = createAsyncThunk<TUserData, TAuthData, { extra: AxiosInstance }>(
+export const loginAction = createAsyncThunk<void, TAuthData, { extra: AxiosInstance }>(
   'login',
   async ({email, password}, {extra: api}) => {
     const response = await api.post<TUserData>(Endpoint.Login, {email, password});
