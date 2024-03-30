@@ -11,7 +11,7 @@ import Favorites from '../../pages/favorites/favorites';
 import Layout from '../layout/layout';
 import PrivateRoute from '../private-route/private-route';
 import {offersActions, offersSelectors} from '../../store/slices/offers';
-import {userActions, userSelectors} from '../../store/slices/user';
+import {userActions} from '../../store/slices/user';
 import {getToken} from '../../services/token';
 
 export function App() {
@@ -23,7 +23,6 @@ export function App() {
       setAuthorization(AuthStatus.NoAuth);
     }
   }, [checkAuthAction, setAuthorization]);
-  const authorizationStatus = useAppSelector(userSelectors.selectAuthStatus);
 
   const {fetchOffersAction} = useActionCreators(offersActions);
   useEffect(() => {
@@ -46,7 +45,7 @@ export function App() {
               </PrivateRoute>
             )}
           />
-          <Route path={AppRoutes.OfferId} element={<OfferDetail offers={offers} authStatus={authorizationStatus} />}/>
+          <Route path={AppRoutes.OfferId} element={<OfferDetail />}/>
           <Route path={AppRoutes.Error404} element={<Error404 type='default'/>}/>
         </Route>
       </Routes>

@@ -20,6 +20,7 @@ export enum Endpoint {
   Favorite = '/favorite',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
 }
 
 export enum StatusLoading {

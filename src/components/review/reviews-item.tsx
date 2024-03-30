@@ -1,39 +1,39 @@
 import React from 'react';
-import {TReview} from '../../types';
+import {TComment} from '../../types';
 import {getRatingWidth} from '../../utils/func';
 
-type TReviewItem = {
-  review: TReview;
-}
+export default function ReviewsItem({review}: { review: TComment }): React.JSX.Element {
+  const date = new Date(review.date);
+  const month = date.toLocaleString('en', {month: 'long'});
+  const day = date.getDate();
 
-export default function ReviewsItem({review}: TReviewItem): React.JSX.Element {
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
           <img
             className="reviews__avatar user__avatar"
-            src={review.avatarUrl}
+            src={review.user.avatarUrl}
             width="54"
             height="54"
             alt="Reviews avatar"
           />
         </div>
         <span className="reviews__user-name">
-          {review.name}
+          {review.user.name}
         </span>
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: getRatingWidth(review.rate)}}></span>
+            <span style={{width: getRatingWidth(review.rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <p className="reviews__text">
-          {review.message}
+          {review.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{review.date}</time>
+        <time className="reviews__time" dateTime={review.date}>{`${month} ${day}`}</time>
       </div>
     </li>
   );
