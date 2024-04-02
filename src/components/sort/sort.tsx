@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import classNames from 'classnames';
 
-import OffersSortItem from './sort-item';
 import {sortOptions} from './const';
+import {useAppSelector} from '../../store/hooks';
+import {offersSelectors} from '../../store/slices/offers';
+import OffersSortItem from './sort-item';
 
 export default function OffersSorting(): React.JSX.Element {
+  const activeSort = useAppSelector(offersSelectors.selectSortItem);
   const [isShowSort, setIsShowSort] = useState<boolean>(false);
 
   const handleShowSort = () => {
@@ -20,7 +23,7 @@ export default function OffersSorting(): React.JSX.Element {
         className="places__sorting-type"
         onClick={handleShowSort}
       >
-        Popular
+        {activeSort.name}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>

@@ -2,27 +2,28 @@ import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 
 import {getRatingWidth} from '../../utils/func';
+import {useActionCreators, useAppSelector} from '../../store/hooks';
 import Error404 from '../Error404';
+import {StatusLoading} from '../../const';
+import {offerDetailActions, offerDetailSelectors} from '../../store/slices/offer-detail';
+import {commentsActions, commentsSelectors} from '../../store/slices/comments';
+import {offersActions, offersSelectors} from '../../store/slices/offers';
+import {Loader} from '../../components/loader';
 import Reviews from '../../components/review/review';
 import Map from '../../components/map/map';
 import OffersList from './offers-list';
-import {useActionCreators, useAppSelector} from '../../store/hooks';
-import {offerDetailActions, offerDetailSelectors} from '../../store/slices/offer-detail';
-import {StatusLoading} from '../../const';
-import {offersSelectors} from '../../store/slices/offers';
-import {Loader} from '../../components/loader';
-import {commentsActions, commentsSelectors} from '../../store/slices/comments';
 import {TOffer} from '../../types';
 
 function OfferDetail(): React.JSX.Element {
   const {id} = useParams();
-  const statusLoading = useAppSelector(offersSelectors.selectStatusLoading);
   const {fetchOfferDetailAction, fetchOffersNearbyAction} = useActionCreators(offerDetailActions);
   const {fetchCommentsAction} = useActionCreators(commentsActions);
+  const activeCity = useAppSelector(offersSelectors.selectCity);
+  const {changeCity} = useActionCreators(offersActions);
 
-  const offers = useAppSelector(offersSelectors.selectOffers);
   const curOffer = useAppSelector(offerDetailSelectors.selectOffer);
   const nearOffers = useAppSelector(offerDetailSelectors.selectOffersNearby);
+  const statusLoading = useAppSelector(offerDetailSelectors.selectStatusLoading);
   const comments = useAppSelector(commentsSelectors.selectComments);
 
   useEffect(() => {
@@ -39,9 +40,11 @@ function OfferDetail(): React.JSX.Element {
 
   if (!curOffer) {
     return <Error404 type='offer'/>;
+  } else if (curOffer.city !== activeCity) {
+    changeCity(curOffer.city);
   }
 
-  let nearOffersMap = [offers.find((offer) => offer.id === curOffer.id)] as TOffer[];
+  let nearOffersMap = [curOffer] as TOffer[];
   if (nearOffers) {
     nearOffersMap = [...nearOffersMap, ...nearOffers];
   }

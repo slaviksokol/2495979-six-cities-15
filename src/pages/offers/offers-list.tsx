@@ -14,7 +14,7 @@ type TOffersList = {
   isOfferDetail?: boolean;
 }
 
-export default function OffersList({nameBlock, offers = [], isOfferDetail = false}: TOffersList): React.JSX.Element {
+export default function OffersList({nameBlock, offers, isOfferDetail = false}: TOffersList): React.JSX.Element {
   const [activeOffer, setActiveOffer] = useState<TOffer | null>(null);
   const handleHover = (offer?: TOffer) => {
     setActiveOffer(offer || null);
@@ -24,7 +24,7 @@ export default function OffersList({nameBlock, offers = [], isOfferDetail = fals
 
   const isMainPage = pathname === AppRoutes.Main;
 
-  const issetOffers = offers.length > 0;
+  const issetOffers = offers ? offers.length > 0 : false;
 
   const classContainer = classNames(
     'container',
@@ -65,7 +65,7 @@ export default function OffersList({nameBlock, offers = [], isOfferDetail = fals
         {
           issetOffers &&
           <div className={classList}>
-            {offers.map((offer) => (
+            {offers?.map((offer) => (
               <OfferCard
                 key={offer.id}
                 offer={offer}
@@ -91,6 +91,7 @@ export default function OffersList({nameBlock, offers = [], isOfferDetail = fals
         <div className="cities__right-section">
           {
             issetOffers &&
+            offers &&
             <Map className="cities__map" activeOffer={activeOffer} offers={offers} />
           }
         </div>

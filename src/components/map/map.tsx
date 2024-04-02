@@ -16,7 +16,7 @@ type TMap = {
 export default function Map({className, offers, activeOffer}: TMap): React.JSX.Element {
   const mapRef = useRef<HTMLElement | null>(null);
   const activeCity = useAppSelector(offersSelectors.selectCity);
-  const map = useMap(mapRef, activeCity.location);
+  const map = useMap(mapRef, activeCity);
   const markerLayer = useRef<LayerGroup>(leaflet.layerGroup());
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function Map({className, offers, activeOffer}: TMap): React.JSX.E
   }, [activeCity, map, activeOffer]);
 
   useEffect((): void => {
-    if (map) {
+    if (map && offers) {
       offers.forEach((offer) => {
         leaflet.marker(
           {

@@ -38,6 +38,7 @@ export default function ReviewForm(): React.JSX.Element {
           rating: Number(review.rating),
         }
       });
+      setReview({rating: 0, review: ''});
     }
   };
 
@@ -47,7 +48,13 @@ export default function ReviewForm(): React.JSX.Element {
       <div className="reviews__rating-form form__rating">
         {
           rating.map(({value, label}) => (
-            <InputRadio key={value} value={value} label={label} handleChange={handleChange} />
+            <InputRadio
+              key={value}
+              value={value}
+              label={label}
+              handleChange={handleChange}
+              checked={review.rating === value}
+            />
           ))
         }
       </div>
@@ -57,6 +64,7 @@ export default function ReviewForm(): React.JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleChange}
+        value={review.review}
       >
       </textarea>
       <div className="reviews__button-wrapper">

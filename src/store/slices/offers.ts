@@ -53,7 +53,7 @@ const offersSlice = createSlice({
 
 const offersActions = {...offersSlice.actions, fetchOffersAction};
 const offersSelectors = {
-  selectCity: (state: State) => state[offersSlice.name].city ?? <TCity>{},
+  selectCity: (state: State) => state[offersSlice.name].city ?? null,
   selectOffers: (state: State) => state[offersSlice.name].offers ?? <TOffer[]>[],
   selectSortItem: (state: State) => state[offersSlice.name].sort ?? sortOptions[0],
   selectStatusLoading: (state: State) => state[offersSlice.name].statusLoading ?? StatusLoading.None,
