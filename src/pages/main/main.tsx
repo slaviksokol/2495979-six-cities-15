@@ -32,6 +32,7 @@ export default function Main(): React.JSX.Element {
     'page__main page__main--index',
     {'page__main--index-empty': offersFiltered.length === 0}
   );
+
   return (
     <main className={pageMainClass}>
       <h1 className="visually-hidden">Cities</h1>

@@ -20,8 +20,12 @@ const initialState: InitialState = {
 const userSlice = createSlice({
   extraReducers: (builder) =>
     builder
-      .addCase(checkAuthAction.fulfilled, (state) => {
+      .addCase(checkAuthAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthStatus.Auth;
+        const userData = action.payload;
+        if (userData) {
+          state.userData = userData;
+        }
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthStatus.NoAuth;

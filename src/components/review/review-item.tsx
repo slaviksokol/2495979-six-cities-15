@@ -2,7 +2,7 @@ import React from 'react';
 import {TComment} from '../../types';
 import {getRatingWidth} from '../../utils/func';
 
-export default function ReviewsItem({review}: { review: TComment }): React.JSX.Element {
+export default function ReviewItem({review}: { review: TComment }): React.JSX.Element {
   const date = new Date(review.date);
   const month = date.toLocaleString('en', {month: 'long'});
   const day = date.getDate();

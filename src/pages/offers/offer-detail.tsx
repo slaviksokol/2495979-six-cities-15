@@ -13,6 +13,7 @@ import Reviews from '../../components/review/review';
 import Map from '../../components/map/map';
 import OffersList from './offers-list';
 import {TOffer} from '../../types';
+import {favoriteActions, favoriteSelectors} from '../../store/slices/favorite';
 
 function OfferDetail(): React.JSX.Element {
   const {id} = useParams();
@@ -25,6 +26,9 @@ function OfferDetail(): React.JSX.Element {
   const nearOffers = useAppSelector(offerDetailSelectors.selectOffersNearby);
   const statusLoading = useAppSelector(offerDetailSelectors.selectStatusLoading);
   const comments = useAppSelector(commentsSelectors.selectComments);
+
+  const favorites = useAppSelector(favoriteSelectors.selectFavorites);
+  const {changeFavoriteAction} = useActionCreators(favoriteActions);
 
   useEffect(() => {
     if (id) {
@@ -47,6 +51,15 @@ function OfferDetail(): React.JSX.Element {
   if (!curOffer) {
     return <Error404 type='offer'/>;
   }
+
+  const isFavorite = favorites?.some((item) => item.id === curOffer.id);
+
+  const handlerFavoriteClick = () => {
+    changeFavoriteAction({
+      offerId: curOffer.id,
+      status: isFavorite ? 0 : 1,
+    });
+  };
 
   let nearOffersMap = [curOffer] as TOffer[];
   if (nearOffers) {
@@ -81,8 +94,9 @@ function OfferDetail(): React.JSX.Element {
                 {curOffer.title}
               </h1>
               <button
-                className={`offer__bookmark-button${curOffer.isFavorite ? ' offer__bookmark-button--active' : ''} button`}
+                className={`offer__bookmark-button${isFavorite ? ' offer__bookmark-button--active' : ''} button`}
                 type="button"
+                onClick={handlerFavoriteClick}
               >
                 <svg className="offer__bookmark-icon" width={31} height={33}>
                   <use xlinkHref="#icon-bookmark"></use>

@@ -4,6 +4,8 @@ import {Link, useLocation} from 'react-router-dom';
 import {AppRoutes} from '../../const';
 import {getRatingWidth} from '../../utils/func';
 import {TOffer} from '../../types';
+import {useActionCreators, useAppSelector} from '../../store/hooks';
+import {favoriteActions, favoriteSelectors} from '../../store/slices/favorite';
 
 type TOfferCardProps = {
   offer: TOffer;
@@ -13,6 +15,8 @@ type TOfferCardProps = {
 
 export default function OfferCard({offer, handleHover, isOfferDetail = false}: TOfferCardProps): React.JSX.Element {
   const {pathname} = useLocation() as {pathname: AppRoutes};
+  const {changeFavoriteAction} = useActionCreators(favoriteActions);
+  const favorites = useAppSelector(favoriteSelectors.selectFavorites);
   let classCard = 'cities';
 
   if (isOfferDetail) {
@@ -20,6 +24,8 @@ export default function OfferCard({offer, handleHover, isOfferDetail = false}: T
   } else if (pathname === AppRoutes.Favorites) {
     classCard = 'favorites';
   }
+
+  const isFavorite = favorites?.some((item) => item.id === offer.id);
 
   const handleMouseOn = () => {
     if (handleHover) {
@@ -31,6 +37,13 @@ export default function OfferCard({offer, handleHover, isOfferDetail = false}: T
     if (handleHover) {
       handleHover();
     }
+  };
+
+  const handlerFavoriteClick = () => {
+    changeFavoriteAction({
+      offerId: offer.id,
+      status: isFavorite ? 0 : 1,
+    });
   };
 
   return (
@@ -57,8 +70,9 @@ export default function OfferCard({offer, handleHover, isOfferDetail = false}: T
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={`place-card__bookmark-button${offer.isFavorite ? ' place-card__bookmark-button--active' : ''} button`}
+            className={`place-card__bookmark-button${isFavorite ? ' place-card__bookmark-button--active' : ''} button`}
             type="button"
+            onClick={handlerFavoriteClick}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

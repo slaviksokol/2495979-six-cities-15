@@ -1,13 +1,20 @@
+import {Helmet} from 'react-helmet-async';
 import React from 'react';
-import {TOffer} from '../../types';
+
 import FavoriteGroupCity from './favorite-group-city';
 import {getOffersByCity} from '../../utils/func';
+import {useAppSelector} from '../../store/hooks';
+import {favoriteSelectors} from '../../store/slices/favorite';
 
-function Favorites({offers}: {offers: TOffer[]}): React.JSX.Element {
-  const offersByCity = getOffersByCity(offers);
+function Favorites(): React.JSX.Element {
+  const favorites = useAppSelector(favoriteSelectors.selectFavorites);
+  const offersByCity = getOffersByCity(favorites);
 
   return (
     <main className="page__main page__main--favorites">
+      <Helmet>
+        <title>Favorites</title>
+      </Helmet>
       <div className="page__favorites-container container">
         <section className="favorites">
           <h1 className="favorites__title">Saved listing</h1>
