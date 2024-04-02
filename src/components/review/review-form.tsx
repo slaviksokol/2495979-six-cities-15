@@ -53,7 +53,7 @@ export default function ReviewForm(): React.JSX.Element {
               value={value}
               label={label}
               handleChange={handleChange}
-              checked={review.rating === value}
+              checked={Number(review.rating) === value}
             />
           ))
         }

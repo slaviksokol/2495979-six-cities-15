@@ -58,7 +58,7 @@ export default function OffersList({nameBlock, offers, isOfferDetail = false}: T
           issetOffers &&
           isMainPage &&
           <>
-            <b className="places__found">{Object.keys(offers).length} places to stay in Amsterdam</b>
+            <b className="places__found">{offers?.length} places to stay in Amsterdam</b>
             <OffersSorting />
           </>
         }
