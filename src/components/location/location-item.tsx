@@ -5,16 +5,19 @@ import {TCity} from '../../types';
 import {useActionCreators, useAppSelector} from '../../store/hooks';
 import {offersActions, offersSelectors} from '../../store/slices/offers';
 
-export default function LocationItem({city}: {city: TCity}): React.JSX.Element {
+function LocationItem({city}: {city: TCity}): React.JSX.Element {
   const activeCity = useAppSelector(offersSelectors.selectCity);
-  const isActive = activeCity === city;
+  const isActive = activeCity.name === city.name;
   const {changeCity} = useActionCreators(offersActions);
 
-  const handleClick = () => {
-    if (!isActive) {
-      changeCity(city);
-    }
-  };
+  const handleClick = React.useCallback(
+    () => {
+      if (!isActive) {
+        changeCity(city);
+      }
+    },
+    [changeCity, city, isActive]
+  );
 
   return (
     <li
@@ -30,3 +33,5 @@ export default function LocationItem({city}: {city: TCity}): React.JSX.Element {
     </li>
   );
 }
+
+export default React.memo(LocationItem);

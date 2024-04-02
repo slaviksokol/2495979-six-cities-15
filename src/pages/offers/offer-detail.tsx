@@ -34,14 +34,18 @@ function OfferDetail(): React.JSX.Element {
     }
   }, [fetchCommentsAction, fetchOfferDetailAction, fetchOffersNearbyAction, id]);
 
+  useEffect(() => {
+    if (curOffer && curOffer.city !== activeCity) {
+      changeCity(curOffer.city);
+    }
+  }, [activeCity, changeCity, curOffer]);
+
   if (statusLoading === StatusLoading.Loading) {
     return <Loader />;
   }
 
   if (!curOffer) {
     return <Error404 type='offer'/>;
-  } else if (curOffer.city !== activeCity) {
-    changeCity(curOffer.city);
   }
 
   let nearOffersMap = [curOffer] as TOffer[];
