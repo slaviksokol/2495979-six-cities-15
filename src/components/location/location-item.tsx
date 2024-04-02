@@ -7,7 +7,7 @@ import {offersActions, offersSelectors} from '../../store/slices/offers';
 
 function LocationItem({city}: {city: TCity}): React.JSX.Element {
   const activeCity = useAppSelector(offersSelectors.selectCity);
-  const isActive = activeCity.name === city.name;
+  const isActive = activeCity && activeCity.name === city.name;
   const {changeCity} = useActionCreators(offersActions);
 
   const handleClick = React.useCallback(
