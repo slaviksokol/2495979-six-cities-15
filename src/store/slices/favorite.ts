@@ -29,7 +29,7 @@ const favoriteSlice = createSlice({
         state.statusLoading = StatusLoading.Failed;
       })
       .addCase(changeFavoriteAction.fulfilled, (state, action) => {
-        const offerFavoriteData = action.payload as TOffer | null;
+        const offerFavoriteData = action.payload;
         if (offerFavoriteData?.isFavorite) {
           state.favorites.push(offerFavoriteData);
         } else if (offerFavoriteData) {
