@@ -6,12 +6,12 @@ import {TOffer} from '../../types';
 import {changeFavoriteAction, fetchFavoriteAction} from '../thunks/favorite';
 
 type InitialState = {
-  favorites: TOffer[] | null;
+  favorites: TOffer[] | [];
   statusLoading: StatusLoading;
 }
 
 const initialState: InitialState = {
-  favorites: null,
+  favorites: [],
   statusLoading: StatusLoading.None,
 };
 
