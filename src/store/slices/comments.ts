@@ -42,7 +42,7 @@ const commentsSlice = createSlice({
 
 const commentsActions = {...commentsSlice.actions, fetchCommentsAction, postCommentAction};
 const commentsSelectors = {
-  selectComments: (state: State) => state[commentsSlice.name].comments,
+  selectComments: (state: State) => state[commentsSlice.name].comments ?? [],
 };
 
 export {commentsSlice, commentsActions, commentsSelectors};
