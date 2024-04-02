@@ -6,7 +6,7 @@ import {TOffer} from '../../types';
 import {changeFavoriteAction, fetchFavoriteAction} from '../thunks/favorite';
 
 type InitialState = {
-  favorites: TOffer[] | [];
+  favorites: TOffer[];
   statusLoading: StatusLoading;
 }
 
