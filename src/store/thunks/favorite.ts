@@ -14,7 +14,7 @@ export const fetchFavoriteAction = createAsyncThunk<TOffer[], void, { extra: Axi
 
 type TFavoriteChange = {
   offerId: string;
-  status: string;
+  status: number;
 }
 
 export const changeFavoriteAction = createAsyncThunk<void, TFavoriteChange, { extra: AxiosInstance }>(

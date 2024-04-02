@@ -26,12 +26,10 @@ const favoriteSlice = createSlice({
         state.statusLoading = StatusLoading.Success;
       })
       .addCase(fetchFavoriteAction.rejected, (state) => {
-        state.authorizationStatus = AuthStatus.NoAuth;
         state.statusLoading = StatusLoading.Failed;
       })
       .addCase(changeFavoriteAction.fulfilled, (state, action) => {
-        const offerFavoriteData = action.payload;
-
+        const offerFavoriteData = action.payload as TOffer | null;
         if (offerFavoriteData?.isFavorite) {
           state.favorites.push(offerFavoriteData);
         } else {
@@ -47,7 +45,7 @@ const favoriteSlice = createSlice({
 
 const favoriteActions = {...favoriteSlice.actions, fetchFavoriteAction, changeFavoriteAction};
 const favoriteSelectors = {
-  selectFavorites: (state: State) => state[favoriteSlice.name].favorites ?? null,
+  selectFavorites: (state: State) => state[favoriteSlice.name].favorites,
 };
 
 export {favoriteSlice, favoriteActions, favoriteSelectors};
