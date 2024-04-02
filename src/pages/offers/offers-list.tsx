@@ -10,7 +10,7 @@ import OffersSorting from '../../components/sort/sort';
 
 type TOffersList = {
   nameBlock: string;
-  offers?: TOffer[];
+  offers: TOffer[] | null;
   isOfferDetail?: boolean;
 }
 

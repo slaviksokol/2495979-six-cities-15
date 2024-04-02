@@ -4,7 +4,7 @@ import {TCity} from '../../types';
 
 function useMap(
   mapRef: RefObject<HTMLElement>,
-  city: TCity
+  city: TCity | null
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);

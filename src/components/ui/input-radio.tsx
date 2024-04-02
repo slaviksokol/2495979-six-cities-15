@@ -6,9 +6,10 @@ type TInputRadio = {
   value: number;
   label: string;
   handleChange: TChangeHandler;
+  checked: boolean;
 }
 
-export default function InputRadio({value, label, handleChange}: TInputRadio): React.JSX.Element {
+export default function InputRadio({value, label, handleChange, checked}: TInputRadio): React.JSX.Element {
   return (
     <Fragment key={value}>
       <input
@@ -18,6 +19,7 @@ export default function InputRadio({value, label, handleChange}: TInputRadio): R
         id={`${value}-stars`}
         type="radio"
         onChange={handleChange}
+        checked={checked}
       />
       <label
         htmlFor={`${value}-stars`}
