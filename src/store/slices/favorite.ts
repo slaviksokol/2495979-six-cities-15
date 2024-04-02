@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 import {State} from '../state';
-import {AuthStatus, StatusLoading} from '../../const';
+import {StatusLoading} from '../../const';
 import {TOffer} from '../../types';
 import {changeFavoriteAction, fetchFavoriteAction} from '../thunks/favorite';
 
@@ -32,7 +32,7 @@ const favoriteSlice = createSlice({
         const offerFavoriteData = action.payload as TOffer | null;
         if (offerFavoriteData?.isFavorite) {
           state.favorites.push(offerFavoriteData);
-        } else {
+        } else if (offerFavoriteData) {
           state.favorites = state.favorites.filter(
             (item) => item.id !== offerFavoriteData.id
           );

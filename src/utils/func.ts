@@ -24,7 +24,7 @@ export function getRatingWidth(rating: number): string {
   return `${rating * (100 / 5)}%`;
 }
 
-export function getOffersByCity(offers: TOffer[]): TOffersByCity[] {
+export function getOffersByCity(offers: TOffer[] | null): TOffersByCity[] {
   if (!offers) {
     return [];
   }

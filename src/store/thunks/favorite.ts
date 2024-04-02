@@ -17,7 +17,7 @@ type TFavoriteChange = {
   status: number;
 }
 
-export const changeFavoriteAction = createAsyncThunk<void, TFavoriteChange, { extra: AxiosInstance }>(
+export const changeFavoriteAction = createAsyncThunk<TOffer, TFavoriteChange, { extra: AxiosInstance }>(
   'changeFavorite',
   async ({ offerId, status }, {extra: api}) => {
     const response = await api.post<TOffer>(`${Endpoint.Favorite}/${offerId}/${status}`);
