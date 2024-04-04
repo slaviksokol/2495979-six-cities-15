@@ -1,11 +1,12 @@
 import React from 'react';
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 
-import {AppRoutes} from '../../const';
+import {AppRoutes, AuthStatus} from '../../const';
 import {getRatingWidth} from '../../utils/func';
 import {TOffer} from '../../types';
 import {useActionCreators, useAppSelector} from '../../store/hooks';
 import {favoriteActions, favoriteSelectors} from '../../store/slices/favorite';
+import {userSelectors} from '../../store/slices/user';
 
 type TOfferCardProps = {
   offer: TOffer;
@@ -15,6 +16,8 @@ type TOfferCardProps = {
 
 export default function OfferCard({offer, handleHover, isOfferDetail = false}: TOfferCardProps): React.JSX.Element {
   const {pathname} = useLocation() as {pathname: AppRoutes};
+  const navigate = useNavigate();
+  const authorizationStatus = useAppSelector(userSelectors.selectAuthStatus);
   const {changeFavoriteAction} = useActionCreators(favoriteActions);
   const favorites = useAppSelector(favoriteSelectors.selectFavorites);
   let classCard = 'cities';
@@ -40,6 +43,10 @@ export default function OfferCard({offer, handleHover, isOfferDetail = false}: T
   };
 
   const handlerFavoriteClick = () => {
+    if (authorizationStatus === AuthStatus.NoAuth) {
+      return navigate(AppRoutes.Login);
+    }
+
     changeFavoriteAction({
       offerId: offer.id,
       status: isFavorite ? 0 : 1,
@@ -52,6 +59,12 @@ export default function OfferCard({offer, handleHover, isOfferDetail = false}: T
       onMouseEnter={handleMouseOn}
       onMouseLeave={handleMouseOff}
     >
+      {
+        offer.isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      }
       <div className={`${classCard}__image-wrapper place-card__image-wrapper`}>
         <Link to={`${AppRoutes.Offer}/${offer.id}`}>
           <img className="place-card__image"

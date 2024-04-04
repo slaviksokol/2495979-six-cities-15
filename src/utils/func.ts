@@ -1,24 +1,4 @@
-import {maxNearOffers} from '../const';
-import {TCity, TLocationCoordinates, TOffer, TOffersByCity, TSortItem} from '../types';
-
-export function getRandomInt(min: number, max: number): number {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-export function getRandomFloat(min: number, max: number): number {
-  return Math.random() * (max - min) + min;
-}
-
-export function getRandomLocationByCity({location}: TCity): TLocationCoordinates {
-  const minStepCoordinate: number = -0.02;
-  const maxStepCoordinate: number = 0.02;
-  const coordinates = location;
-  coordinates.latitude += getRandomFloat(minStepCoordinate, maxStepCoordinate);
-  coordinates.longitude += getRandomFloat(minStepCoordinate, maxStepCoordinate);
-  return coordinates;
-}
+import {TCity, TComment, TOffer, TOffersByCity, TSortItem} from '../types';
 
 export function getRatingWidth(rating: number): string {
   return `${rating * (100 / 5)}%`;
@@ -51,22 +31,6 @@ export function getCitiesFromOffers(offers: TOffer[]): TCity[] {
   return cities;
 }
 
-export function getNearOffers(offers: TOffer[], curOffer: TOffer): TOffer[] {
-  const nearOffers = [];
-  for (const offer of offers) {
-    if (
-      offer.city === curOffer.city
-      && offer.id !== curOffer.id
-      && nearOffers.length < maxNearOffers
-    ) {
-      nearOffers.push(offer);
-    } else if (nearOffers.length === maxNearOffers) {
-      break;
-    }
-  }
-  return nearOffers;
-}
-
 export function getSortedOffers(offers: TOffer[], sortItem: TSortItem): TOffer[] {
   switch (sortItem.code) {
     case 'popular':
@@ -80,4 +44,25 @@ export function getSortedOffers(offers: TOffer[], sortItem: TSortItem): TOffer[]
     default:
       return offers;
   }
+}
+
+export function getSortedComments(comments: TComment[]): TComment[] {
+  comments = [...comments].sort((a, b) => {
+    const keyA = new Date(a.date),
+      keyB = new Date(b.date);
+    if (keyA > keyB) {
+      return -1;
+    }
+    if (keyA < keyB) {
+      return 1;
+    }
+    return 0;
+  });
+
+  return comments;
+}
+
+export function getRandomCity(cities: TCity[]): TCity {
+  const randomIndex = Math.floor(Math.random() * cities.length);
+  return cities[randomIndex];
 }

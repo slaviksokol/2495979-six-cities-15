@@ -8,10 +8,12 @@ import {fetchCommentsAction, postCommentAction} from '../thunks/comments';
 type TCommentsState = {
   comments?: TComment[];
   statusLoading: StatusLoading;
+  statusAddingComment: StatusLoading;
 }
 
 const initialState: TCommentsState = {
   statusLoading: StatusLoading.None,
+  statusAddingComment: StatusLoading.None,
 };
 
 const commentsSlice = createSlice({
@@ -27,6 +29,9 @@ const commentsSlice = createSlice({
       .addCase(fetchCommentsAction.rejected, (state) => {
         state.statusLoading = StatusLoading.Failed;
       })
+      .addCase(postCommentAction.pending, (state) => {
+        state.statusAddingComment = StatusLoading.Loading;
+      })
       .addCase(postCommentAction.fulfilled, (state, action) => {
         if (action.payload) {
           if (!state.comments) {
@@ -34,6 +39,10 @@ const commentsSlice = createSlice({
           }
           state.comments.push(action.payload);
         }
+        state.statusAddingComment = StatusLoading.Success;
+      })
+      .addCase(postCommentAction.rejected, (state) => {
+        state.statusAddingComment = StatusLoading.Failed;
       }),
   initialState,
   name: 'comments',
@@ -43,6 +52,7 @@ const commentsSlice = createSlice({
 const commentsActions = {...commentsSlice.actions, fetchCommentsAction, postCommentAction};
 const commentsSelectors = {
   selectComments: (state: State) => state[commentsSlice.name].comments ?? [],
+  selectStatusAddingComment: (state: State) => state[commentsSlice.name].statusAddingComment ?? [],
 };
 
 export {commentsSlice, commentsActions, commentsSelectors};

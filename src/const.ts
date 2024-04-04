@@ -1,3 +1,6 @@
+export const MAX_NEAR_OFFERS = 3;
+export const MAX_COMMENTS = 10;
+
 export enum AppRoutes {
   Main='/',
   Login='/login',
@@ -12,8 +15,6 @@ export enum AuthStatus {
   NoAuth='NoAuth',
   Unknown='Unknown',
 }
-
-export const maxNearOffers = 3;
 
 export enum Endpoint {
   Offers = '/offers',

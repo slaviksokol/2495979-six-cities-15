@@ -24,5 +24,3 @@ export const changeFavoriteAction = createAsyncThunk<TOffer, TFavoriteChange, { 
     return response.data;
   }
 );
-
-

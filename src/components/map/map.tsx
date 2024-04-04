@@ -1,11 +1,12 @@
 import React, {useEffect, useRef} from 'react';
-import useMap from './use-map';
 import leaflet, {LayerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+
 import {TOffer} from '../../types';
-import {currentCustomIcon, defaultCustomIcon} from './consts';
+import {CurrentCustomIcon, DefaultCustomIcon} from './consts';
 import {useAppSelector} from '../../store/hooks';
 import {offersSelectors} from '../../store/slices/offers';
+import useMap from './use-map';
 
 type TMap = {
   className: string;
@@ -35,7 +36,7 @@ export default function Map({className, offers, activeOffer}: TMap): React.JSX.E
             lat: offer.location.latitude,
             lng: offer.location.longitude
           },
-          {icon: activeOffer && offer.id === activeOffer.id ? currentCustomIcon : defaultCustomIcon}
+          {icon: activeOffer && offer.id === activeOffer.id ? CurrentCustomIcon : DefaultCustomIcon}
         )
           .addTo(markerLayer.current);
       });

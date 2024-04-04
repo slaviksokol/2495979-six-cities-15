@@ -19,21 +19,25 @@ export function App() {
   const authorizationStatus = useAppSelector(userSelectors.selectAuthStatus);
   const {checkAuthAction, setAuthorization} = useActionCreators(userActions);
   const {fetchFavoriteAction} = useActionCreators(favoriteActions);
+  const {resetFavorites} = useActionCreators(favoriteActions);
+  const token = getToken();
   useEffect(() => {
-    if (getToken()) {
+    if (token) {
       checkAuthAction();
     } else {
       setAuthorization(AuthStatus.NoAuth);
     }
-  }, [checkAuthAction, setAuthorization, authorizationStatus]);
+  }, [checkAuthAction, setAuthorization, authorizationStatus, token]);
 
   const {fetchOffersAction} = useActionCreators(offersActions);
   useEffect(() => {
     fetchOffersAction();
     if (authorizationStatus === AuthStatus.Auth) {
       fetchFavoriteAction();
+    } else {
+      resetFavorites();
     }
-  }, [authorizationStatus, fetchFavoriteAction, fetchOffersAction]);
+  }, [authorizationStatus, fetchFavoriteAction, fetchOffersAction, resetFavorites]);
 
   return (
     <BrowserRouter>

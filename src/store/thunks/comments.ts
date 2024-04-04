@@ -27,5 +27,3 @@ export const postCommentAction = createAsyncThunk<TComment, TCommentToSend, { ex
     return response.data;
   }
 );
-
-

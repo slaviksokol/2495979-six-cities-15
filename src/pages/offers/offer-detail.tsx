@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 
 import {getRatingWidth} from '../../utils/func';
 import {useActionCreators, useAppSelector} from '../../store/hooks';
 import Error404 from '../Error404';
-import {StatusLoading} from '../../const';
+import {AppRoutes, AuthStatus, MAX_NEAR_OFFERS, StatusLoading} from '../../const';
 import {offerDetailActions, offerDetailSelectors} from '../../store/slices/offer-detail';
 import {commentsActions, commentsSelectors} from '../../store/slices/comments';
 import {offersActions, offersSelectors} from '../../store/slices/offers';
@@ -14,16 +14,19 @@ import Map from '../../components/map/map';
 import OffersList from './offers-list';
 import {TOffer} from '../../types';
 import {favoriteActions, favoriteSelectors} from '../../store/slices/favorite';
+import {userSelectors} from '../../store/slices/user';
 
 function OfferDetail(): React.JSX.Element {
   const {id} = useParams();
+  const navigate = useNavigate();
+  const authorizationStatus = useAppSelector(userSelectors.selectAuthStatus);
   const {fetchOfferDetailAction, fetchOffersNearbyAction} = useActionCreators(offerDetailActions);
   const {fetchCommentsAction} = useActionCreators(commentsActions);
   const activeCity = useAppSelector(offersSelectors.selectCity);
   const {changeCity} = useActionCreators(offersActions);
 
   const curOffer = useAppSelector(offerDetailSelectors.selectOffer);
-  const nearOffers = useAppSelector(offerDetailSelectors.selectOffersNearby);
+  let nearOffers = useAppSelector(offerDetailSelectors.selectOffersNearby);
   const statusLoading = useAppSelector(offerDetailSelectors.selectStatusLoading);
   const comments = useAppSelector(commentsSelectors.selectComments);
 
@@ -44,7 +47,7 @@ function OfferDetail(): React.JSX.Element {
     }
   }, [activeCity, changeCity, curOffer]);
 
-  if (statusLoading === StatusLoading.Loading) {
+  if (statusLoading !== StatusLoading.Success) {
     return <Loader />;
   }
 
@@ -55,12 +58,17 @@ function OfferDetail(): React.JSX.Element {
   const isFavorite = favorites?.some((item) => item.id === curOffer.id);
 
   const handlerFavoriteClick = () => {
+    if (authorizationStatus === AuthStatus.NoAuth) {
+      return navigate(AppRoutes.Login);
+    }
+
     changeFavoriteAction({
       offerId: curOffer.id,
       status: isFavorite ? 0 : 1,
     });
   };
 
+  nearOffers = nearOffers?.slice(0, MAX_NEAR_OFFERS);
   let nearOffersMap = [curOffer] as TOffer[];
   if (nearOffers) {
     nearOffersMap = [...nearOffersMap, ...nearOffers];
@@ -88,7 +96,10 @@ function OfferDetail(): React.JSX.Element {
         </div>
         <div className="offer__container container">
           <div className="offer__wrapper">
-            {curOffer.isPremium && <div className="offer__mark"><span>Premium</span></div>}
+            {
+              curOffer.isPremium &&
+              <div className="offer__mark"><span>Premium</span></div>
+            }
             <div className="offer__name-wrapper">
               <h1 className="offer__name">
                 {curOffer.title}
@@ -131,36 +142,11 @@ function OfferDetail(): React.JSX.Element {
             <div className="offer__inside">
               <h2 className="offer__inside-title">What&apos;s inside</h2>
               <ul className="offer__inside-list">
-                <li className="offer__inside-item">
-                  Wi-Fi
-                </li>
-                <li className="offer__inside-item">
-                  Washing machine
-                </li>
-                <li className="offer__inside-item">
-                  Towels
-                </li>
-                <li className="offer__inside-item">
-                  Heating
-                </li>
-                <li className="offer__inside-item">
-                  Coffee machine
-                </li>
-                <li className="offer__inside-item">
-                  Baby seat
-                </li>
-                <li className="offer__inside-item">
-                  Kitchen
-                </li>
-                <li className="offer__inside-item">
-                  Dishwasher
-                </li>
-                <li className="offer__inside-item">
-                  Cabel TV
-                </li>
-                <li className="offer__inside-item">
-                  Fridge
-                </li>
+                {
+                  curOffer?.goods.map((good) => (
+                    <li className="offer__inside-item" key={good}>{good}</li>
+                  ))
+                }
               </ul>
             </div>
             <div className="offer__host">
