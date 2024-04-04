@@ -8,7 +8,7 @@ const BACKEND_URL = 'https://15.design.htmlacademy.pro/six-cities';
 const REQUEST_TIMEOUT = 5000;
 
 type DetailMessageType = {
-  details?: {messages: []}[];
+  details?: {messages: string[]}[];
   type: string;
   message: string;
 }
@@ -45,7 +45,13 @@ export const createApi = (): AxiosInstance => {
       if (error.response && shouldDisplayErrorMessage(error.response)) {
         const detailMessage = (error.response.data);
         let message = detailMessage.message;
-        if (detailMessage.details && detailMessage.details.length) {
+        if (
+          detailMessage.details
+          && detailMessage.details.length
+          && detailMessage.details[0]
+          && detailMessage.details[0].messages
+          && detailMessage.details[0].messages.length
+        ) {
           message = detailMessage.details[0].messages[0];
         }
         toast.warn(message);
