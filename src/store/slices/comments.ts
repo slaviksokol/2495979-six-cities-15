@@ -55,7 +55,7 @@ const commentsSelectors = {
   selectComments: (state: State) => {
     let comments = state[commentsSlice.name].comments ?? [];
     if (comments.length) {
-      comments = getSortedComments(state[commentsSlice.name].comments).slice(0, MAX_COMMENTS);
+      comments = getSortedComments(comments).slice(0, MAX_COMMENTS);
     }
     return comments;
   },
