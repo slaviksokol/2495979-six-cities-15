@@ -52,9 +52,13 @@ const commentsSlice = createSlice({
 
 const commentsActions = {...commentsSlice.actions, fetchCommentsAction, postCommentAction};
 const commentsSelectors = {
-  selectComments: (state: State) => state[commentsSlice.name].comments && state[commentsSlice.name].comments !== undefined
-    ? getSortedComments(state[commentsSlice.name].comments).slice(0, MAX_COMMENTS)
-    : [],
+  selectComments: (state: State) => {
+    let comments = state[commentsSlice.name].comments ?? [];
+    if (comments.length) {
+      comments = getSortedComments(state[commentsSlice.name].comments).slice(0, MAX_COMMENTS);
+    }
+    return comments;
+  },
   selectStatusAddingComment: (state: State) => state[commentsSlice.name].statusAddingComment ?? [],
 };
 
