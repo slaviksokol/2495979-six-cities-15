@@ -4,7 +4,7 @@ import {useParams, useNavigate} from 'react-router-dom';
 import {getRatingWidth} from '../../utils/func';
 import {useActionCreators, useAppSelector} from '../../store/hooks';
 import Error404 from '../Error404';
-import {AppRoutes, AuthStatus, MAX_NEAR_OFFERS, StatusLoading} from '../../const';
+import {AppRoutes, AuthStatus, StatusLoading} from '../../const';
 import {offerDetailActions, offerDetailSelectors} from '../../store/slices/offer-detail';
 import {commentsActions, commentsSelectors} from '../../store/slices/comments';
 import {offersActions, offersSelectors} from '../../store/slices/offers';
@@ -26,7 +26,7 @@ function OfferDetail(): React.JSX.Element {
   const {changeCity} = useActionCreators(offersActions);
 
   const curOffer = useAppSelector(offerDetailSelectors.selectOffer);
-  let nearOffers = useAppSelector(offerDetailSelectors.selectOffersNearby);
+  const nearOffers = useAppSelector(offerDetailSelectors.selectOffersNearby);
   const statusLoading = useAppSelector(offerDetailSelectors.selectStatusLoading);
   const comments = useAppSelector(commentsSelectors.selectComments);
 

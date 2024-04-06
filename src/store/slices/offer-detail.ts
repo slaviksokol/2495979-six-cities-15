@@ -39,7 +39,7 @@ const offerDetailSlice = createSlice({
 const offerDetailActions = {...offerDetailSlice.actions, fetchOfferDetailAction, fetchOffersNearbyAction};
 const offerDetailSelectors = {
   selectOffer: (state: State) => state[offerDetailSlice.name].offer,
-  selectOffersNearby: (state: State) => state[offerDetailSlice.name].offersNearby
+  selectOffersNearby: (state: State) => state[offerDetailSlice.name].offersNearby && state[offerDetailSlice.name].offersNearby !== undefined
     ? state[offerDetailSlice.name].offersNearby.slice(0, MAX_NEAR_OFFERS)
     : null,
   selectStatusLoading: (state: State) => state[offerDetailSlice.name].statusLoading,

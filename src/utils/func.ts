@@ -47,6 +47,10 @@ export function getSortedOffers(offers: TOffer[], sortItem: TSortItem): TOffer[]
 }
 
 export function getSortedComments(comments: TComment[]): TComment[] {
+  if (!comments) {
+    return [];
+  }
+
   comments = [...comments].sort((a, b) => {
     const keyA = new Date(a.date),
       keyB = new Date(b.date);
