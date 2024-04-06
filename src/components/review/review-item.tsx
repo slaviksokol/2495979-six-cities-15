@@ -2,10 +2,10 @@ import React from 'react';
 import {TComment} from '../../types';
 import {getRatingWidth} from '../../utils/func';
 
-export default function ReviewsItem({review}: { review: TComment }): React.JSX.Element {
+export default function ReviewItem({review}: { review: TComment }): React.JSX.Element {
   const date = new Date(review.date);
   const month = date.toLocaleString('en', {month: 'long'});
-  const day = date.getDate();
+  const year = date.getFullYear();
 
   return (
     <li className="reviews__item">
@@ -33,7 +33,7 @@ export default function ReviewsItem({review}: { review: TComment }): React.JSX.E
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime={review.date}>{`${month} ${day}`}</time>
+        <time className="reviews__time" dateTime={review.date}>{`${month} ${year}`}</time>
       </div>
     </li>
   );

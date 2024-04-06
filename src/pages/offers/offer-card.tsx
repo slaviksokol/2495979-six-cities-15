@@ -1,9 +1,12 @@
 import React from 'react';
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 
-import {AppRoutes} from '../../const';
+import {AppRoutes, AuthStatus} from '../../const';
 import {getRatingWidth} from '../../utils/func';
 import {TOffer} from '../../types';
+import {useActionCreators, useAppSelector} from '../../store/hooks';
+import {favoriteActions, favoriteSelectors} from '../../store/slices/favorite';
+import {userSelectors} from '../../store/slices/user';
 
 type TOfferCardProps = {
   offer: TOffer;
@@ -13,6 +16,10 @@ type TOfferCardProps = {
 
 export default function OfferCard({offer, handleHover, isOfferDetail = false}: TOfferCardProps): React.JSX.Element {
   const {pathname} = useLocation() as {pathname: AppRoutes};
+  const navigate = useNavigate();
+  const authorizationStatus = useAppSelector(userSelectors.selectAuthStatus);
+  const {changeFavoriteAction} = useActionCreators(favoriteActions);
+  const favorites = useAppSelector(favoriteSelectors.selectFavorites);
   let classCard = 'cities';
 
   if (isOfferDetail) {
@@ -20,6 +27,8 @@ export default function OfferCard({offer, handleHover, isOfferDetail = false}: T
   } else if (pathname === AppRoutes.Favorites) {
     classCard = 'favorites';
   }
+
+  const isFavorite = favorites?.some((item) => item.id === offer.id);
 
   const handleMouseOn = () => {
     if (handleHover) {
@@ -33,12 +42,29 @@ export default function OfferCard({offer, handleHover, isOfferDetail = false}: T
     }
   };
 
+  const handlerFavoriteClick = () => {
+    if (authorizationStatus === AuthStatus.NoAuth) {
+      return navigate(AppRoutes.Login);
+    }
+
+    changeFavoriteAction({
+      offerId: offer.id,
+      status: isFavorite ? 0 : 1,
+    });
+  };
+
   return (
     <article
       className={`${classCard}__card place-card`}
       onMouseEnter={handleMouseOn}
       onMouseLeave={handleMouseOff}
     >
+      {
+        offer.isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      }
       <div className={`${classCard}__image-wrapper place-card__image-wrapper`}>
         <Link to={`${AppRoutes.Offer}/${offer.id}`}>
           <img className="place-card__image"
@@ -57,8 +83,9 @@ export default function OfferCard({offer, handleHover, isOfferDetail = false}: T
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={`place-card__bookmark-button${offer.isFavorite ? ' place-card__bookmark-button--active' : ''} button`}
+            className={`place-card__bookmark-button${isFavorite ? ' place-card__bookmark-button--active' : ''} button`}
             type="button"
+            onClick={handlerFavoriteClick}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

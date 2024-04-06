@@ -7,6 +7,8 @@ import {TOffer} from '../../types';
 import OfferCard from '../../pages/offers/offer-card';
 import Map from '../../components/map/map';
 import OffersSorting from '../../components/sort/sort';
+import {useAppSelector} from '../../store/hooks';
+import {offersSelectors} from '../../store/slices/offers';
 
 type TOffersList = {
   nameBlock: string;
@@ -15,6 +17,7 @@ type TOffersList = {
 }
 
 export default function OffersList({nameBlock, offers, isOfferDetail = false}: TOffersList): React.JSX.Element {
+  const activeCity = useAppSelector(offersSelectors.selectCity);
   const [activeOffer, setActiveOffer] = useState<TOffer | null>(null);
   const handleHover = (offer?: TOffer) => {
     setActiveOffer(offer || null);
@@ -58,7 +61,7 @@ export default function OffersList({nameBlock, offers, isOfferDetail = false}: T
           issetOffers &&
           isMainPage &&
           <>
-            <b className="places__found">{offers?.length} places to stay in Amsterdam</b>
+            <b className="places__found">{offers?.length} places to stay in {activeCity?.name}</b>
             <OffersSorting />
           </>
         }

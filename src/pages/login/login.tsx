@@ -1,9 +1,11 @@
 import React, {FormEvent, useEffect, useRef} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import {useActionCreators, useAppSelector} from '../../store/hooks';
 import {userActions, userSelectors} from '../../store/slices/user';
 import {AppRoutes, AuthStatus} from '../../const';
+import {offersActions, offersSelectors} from '../../store/slices/offers';
+import {getCitiesFromOffers, getRandomCity} from '../../utils/func';
 
 function Login(): React.JSX.Element {
   const authorizationStatus = useAppSelector(userSelectors.selectAuthStatus);
@@ -11,6 +13,10 @@ function Login(): React.JSX.Element {
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const {loginAction} = useActionCreators(userActions);
   const navigate = useNavigate();
+  const offers = useAppSelector(offersSelectors.selectOffers);
+  const {changeCity} = useActionCreators(offersActions);
+  const cities = getCitiesFromOffers(offers);
+  const city = getRandomCity(cities);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -34,6 +40,10 @@ function Login(): React.JSX.Element {
       navigate(AppRoutes.Main);
     }
   }, [authorizationStatus, navigate]);
+
+  const handlerClick = () => {
+    changeCity(city);
+  };
 
   return (
     <main className="page__main page__main--login">
@@ -73,9 +83,13 @@ function Login(): React.JSX.Element {
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <a className="locations__item-link" href="#">
-              <span>Amsterdam</span>
-            </a>
+            <Link
+              className="locations__item-link"
+              to={AppRoutes.Main}
+              onClick={handlerClick}
+            >
+              <span>{city ? city.name : 'Main'}</span>
+            </Link>
           </div>
         </section>
       </div>

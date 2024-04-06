@@ -8,8 +8,8 @@ type errorParamsType = {
 const errorTypes: {
   [key: string]: string;
 } = {
-  offer: 'Предложение с указанным ID не найдено',
-  default: 'Вы зашли на несуществующую страницу',
+  offer: 'Offer with the specified ID was not found',
+  default: 'You have visited a non-existent page',
 };
 
 function Error404({type}: errorParamsType): React.JSX.Element {
@@ -21,11 +21,11 @@ function Error404({type}: errorParamsType): React.JSX.Element {
 
   return (
     <div style={{textAlign: 'center'}}>
-      <h1 style={{color: 'red'}}>Здесь ничего нет!</h1>
+      <h1 style={{color: 'red'}}>There is nothing here!</h1>
       <p>
         {message}
       </p>
-      <Link to='/' style={{fontWeight: 'bold', textDecoration: 'underline'}}>На главную 🏠</Link>
+      <Link to='/' style={{fontWeight: 'bold', textDecoration: 'underline'}}>To main 🏠</Link>
     </div>
   );
 }

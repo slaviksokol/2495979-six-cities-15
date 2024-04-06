@@ -1,9 +1,10 @@
-import React, {FormEvent, ReactEventHandler, useState} from 'react';
+import React, {FormEvent, ReactEventHandler, useEffect, useState} from 'react';
 
 import InputRadio from '../ui/input-radio';
 import {useActionCreators, useAppSelector} from '../../store/hooks';
-import {commentsActions} from '../../store/slices/comments';
+import {commentsActions, commentsSelectors} from '../../store/slices/comments';
 import {offerDetailSelectors} from '../../store/slices/offer-detail';
+import {MAX_TEXT_COMMENT_LENGTH, MIN_TEXT_COMMENT_LENGTH, StatusLoading} from '../../const';
 
 type TChangeHandler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
@@ -23,10 +24,9 @@ export default function ReviewForm(): React.JSX.Element {
     setReview({...review, [name]: value});
   };
 
-  const minTextLength: number = 50;
-
   const {postCommentAction} = useActionCreators(commentsActions);
   const curOffer = useAppSelector(offerDetailSelectors.selectOffer);
+  const statusAddingComment = useAppSelector(commentsSelectors.selectStatusAddingComment);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -38,9 +38,21 @@ export default function ReviewForm(): React.JSX.Element {
           rating: Number(review.rating),
         }
       });
-      setReview({rating: 0, review: ''});
     }
   };
+
+  useEffect(() => {
+    if (statusAddingComment === StatusLoading.Success) {
+      setReview({rating: 0, review: ''});
+    }
+  }, [statusAddingComment]);
+
+  const isDisabledButton = review.rating === 0
+    || review.review.length < MIN_TEXT_COMMENT_LENGTH
+    || review.review.length > MAX_TEXT_COMMENT_LENGTH
+    || statusAddingComment === StatusLoading.Loading;
+
+  const isDisabledForm = statusAddingComment === StatusLoading.Loading;
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
@@ -54,6 +66,7 @@ export default function ReviewForm(): React.JSX.Element {
               label={label}
               handleChange={handleChange}
               checked={Number(review.rating) === value}
+              disabled={isDisabledForm}
             />
           ))
         }
@@ -65,17 +78,18 @@ export default function ReviewForm(): React.JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleChange}
         value={review.review}
+        disabled={isDisabledForm}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and
-          describe your stay with at least <b className="reviews__text-amount">{minTextLength} characters</b>.
+          describe your stay with at least <b className="reviews__text-amount">{MIN_TEXT_COMMENT_LENGTH} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={review.rating === 0 || review.review.length < minTextLength}
+          disabled={isDisabledButton}
         >
           Submit
         </button>
