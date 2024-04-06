@@ -68,9 +68,6 @@ function OfferDetail(): React.JSX.Element {
     });
   };
 
-  if (nearOffers) {
-    nearOffers = nearOffers.slice(0, MAX_NEAR_OFFERS);
-  }
   let nearOffersMap = [curOffer] as TOffer[];
   if (nearOffers) {
     nearOffersMap = [...nearOffersMap, ...nearOffers];

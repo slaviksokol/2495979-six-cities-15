@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 import {TOffer, TOfferDetail} from '../../types';
 import {State} from '../state';
-import {StatusLoading} from '../../const';
+import {MAX_NEAR_OFFERS, StatusLoading} from '../../const';
 import {fetchOfferDetailAction, fetchOffersNearbyAction} from '../thunks/offer-detail';
 
 type TOfferDetailState = {
@@ -39,7 +39,9 @@ const offerDetailSlice = createSlice({
 const offerDetailActions = {...offerDetailSlice.actions, fetchOfferDetailAction, fetchOffersNearbyAction};
 const offerDetailSelectors = {
   selectOffer: (state: State) => state[offerDetailSlice.name].offer,
-  selectOffersNearby: (state: State) => state[offerDetailSlice.name].offersNearby ?? null,
+  selectOffersNearby: (state: State) => state[offerDetailSlice.name].offersNearby
+    ? state[offerDetailSlice.name].offersNearby.slice(0, MAX_NEAR_OFFERS)
+    : null,
   selectStatusLoading: (state: State) => state[offerDetailSlice.name].statusLoading,
 };
 

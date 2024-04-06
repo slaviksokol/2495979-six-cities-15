@@ -2,8 +2,9 @@ import {createSlice} from '@reduxjs/toolkit';
 
 import {TComment} from '../../types';
 import {State} from '../state';
-import {StatusLoading} from '../../const';
+import {MAX_COMMENTS, StatusLoading} from '../../const';
 import {fetchCommentsAction, postCommentAction} from '../thunks/comments';
+import {getSortedComments} from '../../utils/func';
 
 type TCommentsState = {
   comments?: TComment[];
@@ -51,7 +52,9 @@ const commentsSlice = createSlice({
 
 const commentsActions = {...commentsSlice.actions, fetchCommentsAction, postCommentAction};
 const commentsSelectors = {
-  selectComments: (state: State) => state[commentsSlice.name].comments ?? [],
+  selectComments: (state: State) => state[commentsSlice.name].comments
+    ? getSortedComments(state[commentsSlice.name].comments).slice(0, MAX_COMMENTS)
+    : [],
   selectStatusAddingComment: (state: State) => state[commentsSlice.name].statusAddingComment ?? [],
 };
 

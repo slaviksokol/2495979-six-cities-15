@@ -1,5 +1,7 @@
 export const MAX_NEAR_OFFERS = 3;
 export const MAX_COMMENTS = 10;
+export const MIN_TEXT_COMMENT_LENGTH: number = 50;
+export const MAX_TEXT_COMMENT_LENGTH: number = 300;
 
 export enum AppRoutes {
   Main='/',

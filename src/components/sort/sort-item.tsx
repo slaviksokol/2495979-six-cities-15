@@ -7,7 +7,7 @@ import {offersActions, offersSelectors} from '../../store/slices/offers';
 
 type TOffersSortItem = {
   item: TSortItem;
-  handleShowSort?: () => void;
+  handleShowSort?: VoidFunction;
 }
 
 export default function OffersSortItem({item, handleShowSort}: TOffersSortItem): React.JSX.Element {
