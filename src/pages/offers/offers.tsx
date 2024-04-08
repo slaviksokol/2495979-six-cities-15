@@ -16,7 +16,7 @@ type TOffersList = {
   isOfferDetail?: boolean;
 }
 
-export default function OffersList({nameBlock, offers, isOfferDetail = false}: TOffersList): React.JSX.Element {
+export default function Offers({nameBlock, offers, isOfferDetail = false}: TOffersList): React.JSX.Element {
   const activeCity = useAppSelector(offersSelectors.selectCity);
   const [activeOffer, setActiveOffer] = useState<TOffer | null>(null);
   const handleHover = (offer?: TOffer) => {

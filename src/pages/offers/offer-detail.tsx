@@ -11,7 +11,7 @@ import {offersActions, offersSelectors} from '../../store/slices/offers';
 import {Loader} from '../../components/loader';
 import Reviews from '../../components/review/review';
 import Map from '../../components/map/map';
-import OffersList from './offers-list';
+import Offers from './offers.tsx';
 import {TOffer} from '../../types';
 import {favoriteActions, favoriteSelectors} from '../../store/slices/favorite';
 import {userSelectors} from '../../store/slices/user';
@@ -181,7 +181,7 @@ function OfferDetail(): React.JSX.Element {
         </div>
         <Map className="offer__map" activeOffer={curOffer} offers={nearOffersMap} />
       </section>
-      <OffersList nameBlock="Other places in the neighbourhood" offers={nearOffers} isOfferDetail />
+      <Offers nameBlock="Other places in the neighbourhood" offers={nearOffers} isOfferDetail />
     </main>
   );
 }
