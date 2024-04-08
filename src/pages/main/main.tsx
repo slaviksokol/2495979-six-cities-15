@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import {offersSelectors} from '../../store/slices/offers';
 import {useAppSelector} from '../../store/hooks';
-import OffersList from '../offers/offers-list';
+import Offers from '../offers/offers.tsx';
 import LocationList from '../../components/location/location-list';
 import {StatusLoading} from '../../const';
 import {Loader} from '../../components/loader';
@@ -40,7 +40,7 @@ export default function Main(): React.JSX.Element {
         <LocationList cities={cities} />
       </div>
       <div className="cities">
-        <OffersList nameBlock="Places" offers={offersFiltered} />
+        <Offers nameBlock="Places" offers={offersFiltered} />
       </div>
     </main>
   );

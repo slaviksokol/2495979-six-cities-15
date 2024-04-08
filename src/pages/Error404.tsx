@@ -5,7 +5,7 @@ type errorParamsType = {
   type: string;
 }
 
-const errorTypes: {
+const ERROR_TYPES: {
   [key: string]: string;
 } = {
   offer: 'Offer with the specified ID was not found',
@@ -13,10 +13,10 @@ const errorTypes: {
 };
 
 function Error404({type}: errorParamsType): React.JSX.Element {
-  let message = errorTypes.default;
+  let message = ERROR_TYPES.default;
 
-  if (type && errorTypes[type]) {
-    message = errorTypes[type];
+  if (type && ERROR_TYPES[type]) {
+    message = ERROR_TYPES[type];
   }
 
   return (

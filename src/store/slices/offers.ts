@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 import {TCity, TOffer, TSortItem} from '../../types';
-import {SortOptions} from '../../components/sort/const';
+import {SORT_OPTIONS} from '../../components/sort/const';
 import {State} from '../state';
 import {fetchOffersAction} from '../thunks/offers';
 import {StatusLoading} from '../../const';
@@ -15,7 +15,7 @@ type TOffersState = {
 }
 
 const initialState: TOffersState = {
-  sort: SortOptions[0],
+  sort: SORT_OPTIONS[0],
   statusLoading: StatusLoading.None,
 };
 
@@ -55,7 +55,7 @@ const offersActions = {...offersSlice.actions, fetchOffersAction};
 const offersSelectors = {
   selectCity: (state: State) => state[offersSlice.name].city ?? null,
   selectOffers: (state: State) => state[offersSlice.name].offers ?? <TOffer[]>[],
-  selectSortItem: (state: State) => state[offersSlice.name].sort ?? SortOptions[0],
+  selectSortItem: (state: State) => state[offersSlice.name].sort ?? SORT_OPTIONS[0],
   selectStatusLoading: (state: State) => state[offersSlice.name].statusLoading ?? StatusLoading.None,
 };
 
