@@ -9,13 +9,14 @@ import {CITIES, StatusLoading,} from '../../const';
 
 type TOffersState = {
   city: string;
-  offers?: TOffer[];
+  offers: TOffer[];
   sort: TSortItem;
   statusLoading: StatusLoading;
 }
 
 const initialState: TOffersState = {
   city: CITIES[0],
+  offers: [],
   sort: SortOptions[0],
   statusLoading: StatusLoading.None,
 };
