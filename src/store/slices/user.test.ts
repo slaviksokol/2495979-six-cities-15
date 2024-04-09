@@ -1,7 +1,7 @@
 import {userSlice} from './user.ts';
 import {AuthStatus, StatusLoading} from '../../const.ts';
-import {makeFakeUser} from "../../utils/mocks.ts";
-import {checkAuthAction, loginAction, logoutAction} from "../thunks/user.ts";
+import {makeFakeUser} from '../../utils/mocks.ts';
+import {checkAuthAction, loginAction, logoutAction} from '../thunks/user.ts';
 
 describe('User Slice', () => {
   it ('should return initial state with empty action', () => {

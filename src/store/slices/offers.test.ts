@@ -133,4 +133,4 @@ describe('offers slice', () => {
 
     expect(result).toEqual(expectedState);
   });
-})
+});
