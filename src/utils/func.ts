@@ -1,4 +1,4 @@
-import {TCity, TComment, TOffer, TOffersByCity, TSortItem} from '../types';
+import {TComment, TOffer, TOffersByCity, TSortItem} from '../types';
 
 export function getRatingWidth(rating: number): string {
   rating = Math.round(rating);
@@ -21,15 +21,6 @@ export function getOffersByCity(offers: TOffer[] | null): TOffersByCity[] {
   });
 
   return offersByCity;
-}
-
-export function getCitiesFromOffers(offers: TOffer[]): TCity[] {
-  const cities: TCity[] = [];
-  const offersByCity = getOffersByCity(offers);
-  offersByCity.forEach((city) => {
-    cities.push(city.city);
-  });
-  return cities;
 }
 
 export function getSortedOffers(offers: TOffer[], sortItem: TSortItem): TOffer[] {
