@@ -9,7 +9,7 @@ import {AppRoutes, AuthStatus, StatusLoading} from '../../const';
 import {offerDetailActions, offerDetailSelectors} from '../../store/slices/offer-detail';
 import {commentsActions, commentsSelectors} from '../../store/slices/comments';
 import {offersActions, offersSelectors} from '../../store/slices/offers';
-import {Loader} from '../../components/loader';
+import {Loader} from '../../components/loader/loader';
 import Reviews from '../../components/review/review';
 import Map from '../../components/map/map';
 import Offers from './offers.tsx';

@@ -4,9 +4,9 @@ import classNames from 'classnames';
 import {offersSelectors} from '../../store/slices/offers';
 import {useAppSelector} from '../../store/hooks';
 import Offers from '../offers/offers.tsx';
-import LocationList from '../../components/location/location-list';
+import Location from '../../components/location/location';
 import {StatusLoading} from '../../const';
-import {Loader} from '../../components/loader';
+import {Loader} from '../../components/loader/loader';
 import {getSortedOffers} from '../../utils/func';
 
 export default function Main(): React.JSX.Element {
@@ -35,7 +35,7 @@ export default function Main(): React.JSX.Element {
     <main className={pageMainClass}>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
-        <LocationList />
+        <Location />
       </div>
       <div className="cities">
         <Offers nameBlock="Places" offers={offersFiltered} />
