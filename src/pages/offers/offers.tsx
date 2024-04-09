@@ -41,7 +41,7 @@ export default function Offers({nameBlock, offers, isOfferDetail = false}: TOffe
     {'near-places': isOfferDetail && issetOffers}
   );
   const classH2 = classNames(
-    {'visually': isMainPage},
+    {'visually-hidden': isMainPage},
     {'near-places__title': isOfferDetail}
   );
   const classList = classNames(
@@ -61,7 +61,7 @@ export default function Offers({nameBlock, offers, isOfferDetail = false}: TOffe
           issetOffers &&
           isMainPage &&
           <>
-            <b className="places__found">{offers?.length} places to stay in {activeCity?.name}</b>
+            <b className="places__found">{offers?.length} places to stay in {activeCity}</b>
             <OffersSorting />
           </>
         }
@@ -95,7 +95,7 @@ export default function Offers({nameBlock, offers, isOfferDetail = false}: TOffe
           {
             issetOffers &&
             offers &&
-            <Map className="cities__map" activeOffer={activeOffer} offers={offers} />
+            <Map city={offers[0].city} className="cities__map" activeOffer={activeOffer} offers={offers} />
           }
         </div>
       }

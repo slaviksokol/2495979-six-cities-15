@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 
 import {AppRoutes, AuthStatus} from '../../const';
-import {getRatingWidth} from '../../utils/func';
+import {capitalizeFirstLetter, getRatingWidth} from '../../utils/func';
 import {TOffer} from '../../types';
 import {useActionCreators, useAppSelector} from '../../store/hooks';
 import {favoriteActions, favoriteSelectors} from '../../store/slices/favorite';
@@ -22,10 +22,14 @@ export default function OfferCard({offer, handleHover, isOfferDetail = false}: T
   const favorites = useAppSelector(favoriteSelectors.selectFavorites);
   let classCard = 'cities';
 
+  let imgWidth = 260;
+  let imgHeight = 260;
   if (isOfferDetail) {
     classCard = 'near-places';
   } else if (pathname === AppRoutes.Favorites) {
     classCard = 'favorites';
+    imgWidth = 150;
+    imgHeight = 110;
   }
 
   const isFavorite = favorites?.some((item) => item.id === offer.id);
@@ -69,9 +73,8 @@ export default function OfferCard({offer, handleHover, isOfferDetail = false}: T
         <Link to={`${AppRoutes.Offer}/${offer.id}`}>
           <img className="place-card__image"
             src={offer.previewImage}
-            width="260"
-            height="200"
-            style={{width: 260,height: 200}}
+            width={imgWidth}
+            height={imgHeight}
             alt="Place image"
           />
         </Link>
@@ -102,7 +105,7 @@ export default function OfferCard({offer, handleHover, isOfferDetail = false}: T
         <h2 className="place-card__name">
           <Link to={`${AppRoutes.Offer}/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{capitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>
   );

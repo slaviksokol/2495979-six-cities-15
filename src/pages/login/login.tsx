@@ -3,9 +3,9 @@ import {Link, useNavigate} from 'react-router-dom';
 
 import {useActionCreators, useAppSelector} from '../../store/hooks';
 import {userActions, userSelectors} from '../../store/slices/user';
-import {AppRoutes, AuthStatus} from '../../const';
-import {offersActions, offersSelectors} from '../../store/slices/offers';
-import {getCitiesFromOffers, getRandomCity} from '../../utils/func';
+import {AppRoutes, AuthStatus, CITIES} from '../../const';
+import {offersActions} from '../../store/slices/offers';
+import {getRandomCity} from '../../utils/func';
 
 function Login(): React.JSX.Element {
   const authorizationStatus = useAppSelector(userSelectors.selectAuthStatus);
@@ -13,10 +13,8 @@ function Login(): React.JSX.Element {
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const {loginAction} = useActionCreators(userActions);
   const navigate = useNavigate();
-  const offers = useAppSelector(offersSelectors.selectOffers);
   const {changeCity} = useActionCreators(offersActions);
-  const cities = getCitiesFromOffers(offers);
-  const city = getRandomCity(cities);
+  const cityName = getRandomCity(CITIES);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -42,7 +40,7 @@ function Login(): React.JSX.Element {
   }, [authorizationStatus, navigate]);
 
   const handlerClick = () => {
-    changeCity(city);
+    changeCity(cityName);
   };
 
   return (
@@ -88,7 +86,7 @@ function Login(): React.JSX.Element {
               to={AppRoutes.Main}
               onClick={handlerClick}
             >
-              <span>{city ? city.name : 'Main'}</span>
+              <span>{cityName}</span>
             </Link>
           </div>
         </section>

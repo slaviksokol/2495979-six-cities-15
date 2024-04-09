@@ -1,21 +1,22 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {toast} from 'react-toastify';
 
-import {TCity, TOffer, TSortItem} from '../../types';
-import {SORT_OPTIONS} from '../../components/sort/const';
+import {TOffer, TSortItem} from '../../types';
+import {SortOptions} from '../../components/sort/const';
 import {State} from '../state';
 import {fetchOffersAction} from '../thunks/offers';
-import {StatusLoading} from '../../const';
-import {getCitiesFromOffers} from '../../utils/func';
+import {CITIES, StatusLoading,} from '../../const';
 
 type TOffersState = {
-  city?: TCity;
+  city: string;
   offers?: TOffer[];
   sort: TSortItem;
   statusLoading: StatusLoading;
 }
 
 const initialState: TOffersState = {
-  sort: SORT_OPTIONS[0],
+  city: CITIES[0],
+  sort: SortOptions[0],
   statusLoading: StatusLoading.None,
 };
 
@@ -27,19 +28,16 @@ const offersSlice = createSlice({
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.statusLoading = StatusLoading.Success;
-        const offers = action.payload;
-        if (offers.length) {
-          state.city = getCitiesFromOffers(offers)[0] ?? [];
-        }
         state.offers = action.payload;
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.statusLoading = StatusLoading.Failed;
+        toast.error('Offers not found');
       }),
   initialState,
   name: 'offers',
   reducers: {
-    changeCity: (state, action: PayloadAction<TCity>) => {
+    changeCity: (state, action: PayloadAction<string>) => {
       state.city = action.payload;
     },
     getOffers: (state, action: PayloadAction<TOffer[]>) => {
@@ -55,7 +53,7 @@ const offersActions = {...offersSlice.actions, fetchOffersAction};
 const offersSelectors = {
   selectCity: (state: State) => state[offersSlice.name].city ?? null,
   selectOffers: (state: State) => state[offersSlice.name].offers ?? <TOffer[]>[],
-  selectSortItem: (state: State) => state[offersSlice.name].sort ?? SORT_OPTIONS[0],
+  selectSortItem: (state: State) => state[offersSlice.name].sort ?? SortOptions[0],
   selectStatusLoading: (state: State) => state[offersSlice.name].statusLoading ?? StatusLoading.None,
 };
 

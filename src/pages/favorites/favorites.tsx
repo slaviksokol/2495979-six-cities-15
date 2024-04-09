@@ -14,7 +14,7 @@ function Favorites(): React.JSX.Element {
   const statusLoading = useAppSelector(favoriteSelectors.selectFavoritesStatus);
   const offersByCity = getOffersByCity(favorites);
 
-  if (statusLoading !== StatusLoading.Success) {
+  if (statusLoading === StatusLoading.Loading) {
     return <Loader />;
   }
 

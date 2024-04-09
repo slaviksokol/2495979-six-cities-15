@@ -1,35 +1,36 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 
-import {TCity} from '../../types';
 import {useActionCreators, useAppSelector} from '../../store/hooks';
 import {offersActions, offersSelectors} from '../../store/slices/offers';
+import {AppRoutes} from '../../const.ts';
 
-export default function LocationItem({city}: {city: TCity}): React.JSX.Element {
+export default function LocationItem({cityName}: { cityName: string }): React.JSX.Element {
   const activeCity = useAppSelector(offersSelectors.selectCity);
-  const isActive = activeCity && activeCity.name === city.name;
+  const isActive = activeCity === cityName;
   const {changeCity} = useActionCreators(offersActions);
 
   const handleClick = React.useCallback(
     () => {
       if (!isActive) {
-        changeCity(city);
+        changeCity(cityName);
       }
     },
-    [changeCity, city, isActive]
+    [changeCity, cityName, isActive]
   );
 
   return (
     <li
       className="locations__item"
-      onClick={handleClick}
     >
-      <a
+      <Link
         className={classNames('locations__item-link tabs__item', {'tabs__item--active': isActive})}
-        href="#"
+        onClick={handleClick}
+        to={AppRoutes.Main}
       >
-        <span>{city.name}</span>
-      </a>
+        <span>{cityName}</span>
+      </Link>
     </li>
   );
 }

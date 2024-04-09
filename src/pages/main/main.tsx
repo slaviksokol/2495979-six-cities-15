@@ -7,19 +7,17 @@ import Offers from '../offers/offers.tsx';
 import LocationList from '../../components/location/location-list';
 import {StatusLoading} from '../../const';
 import {Loader} from '../../components/loader';
-import {getCitiesFromOffers, getSortedOffers} from '../../utils/func';
+import {getSortedOffers} from '../../utils/func';
 
 export default function Main(): React.JSX.Element {
   const statusLoading = useAppSelector(offersSelectors.selectStatusLoading);
   const offers = useAppSelector(offersSelectors.selectOffers);
 
-  const cities = getCitiesFromOffers(offers);
-
   const activeCity = useAppSelector(offersSelectors.selectCity);
   const activeSortItem = useAppSelector(offersSelectors.selectSortItem);
 
   let offersFiltered = activeCity
-    ? offers.filter((offer) => offer.city.name === activeCity.name)
+    ? offers.filter((offer) => offer.city.name === activeCity)
     : offers;
 
   offersFiltered = getSortedOffers(offersFiltered, activeSortItem);
@@ -37,7 +35,7 @@ export default function Main(): React.JSX.Element {
     <main className={pageMainClass}>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
-        <LocationList cities={cities} />
+        <LocationList />
       </div>
       <div className="cities">
         <Offers nameBlock="Places" offers={offersFiltered} />

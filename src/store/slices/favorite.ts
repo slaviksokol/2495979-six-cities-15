@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {toast} from 'react-toastify';
 
 import {State} from '../state';
 import {StatusLoading} from '../../const';
@@ -28,6 +29,7 @@ const favoriteSlice = createSlice({
       .addCase(fetchFavoriteAction.rejected, (state) => {
         state.statusLoading = StatusLoading.Failed;
         state.favorites = [];
+        toast.error('Favorites not found');
       })
       .addCase(changeFavoriteAction.fulfilled, (state, action) => {
         const offerFavoriteData = action.payload;

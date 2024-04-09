@@ -4,7 +4,7 @@ import {useEffect} from 'react';
 import {AppRoutes, AuthStatus} from '../../const';
 import {useActionCreators, useAppSelector} from '../../store/hooks';
 import Main from '../../pages/main/main';
-import Error404 from '../../pages/Error404';
+import ErrorPage from '../../pages/error-page/error-page';
 import Login from '../../pages/login/login';
 import OfferDetail from '../../pages/offers/offer-detail';
 import Favorites from '../../pages/favorites/favorites';
@@ -54,7 +54,7 @@ export function App() {
             )}
           />
           <Route path={AppRoutes.OfferId} element={<OfferDetail />}/>
-          <Route path={AppRoutes.Error404} element={<Error404 type='default'/>}/>
+          <Route path={AppRoutes.Error404} element={<ErrorPage type='default'/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

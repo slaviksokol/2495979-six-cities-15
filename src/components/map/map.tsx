@@ -2,31 +2,29 @@ import React, {useEffect, useRef} from 'react';
 import leaflet, {LayerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import {TOffer} from '../../types';
+import {TCity, TOffer} from '../../types';
 import {CurrentCustomIcon, DefaultCustomIcon} from './consts';
-import {useAppSelector} from '../../store/hooks';
-import {offersSelectors} from '../../store/slices/offers';
 import useMap from './use-map';
 
 type TMap = {
+  city: TCity;
   className: string;
   offers: TOffer[];
   activeOffer: TOffer | null;
 }
 
-export default function Map({className, offers, activeOffer}: TMap): React.JSX.Element {
+export default function Map({city, className, offers, activeOffer}: TMap): React.JSX.Element {
   const mapRef = useRef<HTMLElement | null>(null);
-  const activeCity = useAppSelector(offersSelectors.selectCity);
-  const map = useMap(mapRef, activeCity);
+  const map = useMap(mapRef, city);
   const markerLayer = useRef<LayerGroup>(leaflet.layerGroup());
 
   useEffect(() => {
-    if (map && activeCity) {
-      map.setView([activeCity.location.latitude, activeCity.location.longitude], activeCity.location.zoom);
+    if (map) {
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
       markerLayer.current.addTo(map);
       markerLayer.current.clearLayers();
     }
-  }, [activeCity, map, activeOffer]);
+  }, [map, activeOffer, city]);
 
   useEffect((): void => {
     if (map && offers) {
@@ -46,7 +44,6 @@ export default function Map({className, offers, activeOffer}: TMap): React.JSX.E
   return (
     <section
       className={`${className} map`}
-      style={{ height: '631px' }}
       ref={mapRef}
     >
     </section>
