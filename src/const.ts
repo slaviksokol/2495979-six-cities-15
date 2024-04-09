@@ -32,3 +32,5 @@ export enum StatusLoading {
   Success,
   Failed,
 }
+
+export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];

@@ -15,7 +15,7 @@ export default function Header({logoLinkClassName, headerNav}: HeaderParams): Re
         <div className="header__wrapper">
           <div className="header__left">
             <Link className={logoLinkClassName} to={AppRoutes.Main}>
-              <img className="header__logo" src="../../markup/img/logo.svg" alt="6 cities logo" width="81" height="41"/>
+              <img className="header__logo" src="../../../markup/img/logo.svg" alt="6 cities logo" width="81" height="41"/>
             </Link>
           </div>
           {headerNav}

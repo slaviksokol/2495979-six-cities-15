@@ -1,14 +1,15 @@
 import React, {useEffect} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
+import classNames from 'classnames';
 
-import {getRatingWidth} from '../../utils/func';
+import {getRatingWidth, pluralize} from '../../utils/func';
 import {useActionCreators, useAppSelector} from '../../store/hooks';
-import Error404 from '../Error404';
+import ErrorPage from '../error-page/error-page';
 import {AppRoutes, AuthStatus, StatusLoading} from '../../const';
 import {offerDetailActions, offerDetailSelectors} from '../../store/slices/offer-detail';
 import {commentsActions, commentsSelectors} from '../../store/slices/comments';
 import {offersActions, offersSelectors} from '../../store/slices/offers';
-import {Loader} from '../../components/loader';
+import {Loader} from '../../components/loader/loader';
 import Reviews from '../../components/review/review';
 import Map from '../../components/map/map';
 import Offers from './offers.tsx';
@@ -36,23 +37,28 @@ function OfferDetail(): React.JSX.Element {
   useEffect(() => {
     if (id) {
       fetchOfferDetailAction(id);
+    }
+  }, [fetchOfferDetailAction, id]);
+
+  useEffect(() => {
+    if (id && statusLoading === StatusLoading.Success) {
       fetchOffersNearbyAction(id);
       fetchCommentsAction(id);
     }
-  }, [fetchCommentsAction, fetchOfferDetailAction, fetchOffersNearbyAction, id]);
+  }, [fetchCommentsAction, fetchOffersNearbyAction, id, statusLoading]);
 
   useEffect(() => {
-    if (curOffer && curOffer.city !== activeCity) {
-      changeCity(curOffer.city);
+    if (curOffer && curOffer.city.name !== activeCity) {
+      changeCity(curOffer.city.name);
     }
   }, [activeCity, changeCity, curOffer]);
 
-  if (statusLoading !== StatusLoading.Success) {
+  if (statusLoading === StatusLoading.Loading) {
     return <Loader />;
   }
 
   if (!curOffer) {
-    return <Error404 type='offer'/>;
+    return <ErrorPage type='offer'/>;
   }
 
   const isFavorite = favorites?.some((item) => item.id === curOffer.id);
@@ -74,6 +80,12 @@ function OfferDetail(): React.JSX.Element {
   }
 
   const commentsCount = comments ? comments.length : 0;
+
+  const classHostAvatar = classNames(
+    'offer__avatar-wrapper',
+    {'offer__avatar-wrapper--pro': curOffer.host.isPro},
+    'user__avatar-wrapper',
+  );
 
   return (
     <main className="page__main page__main--offer">
@@ -128,10 +140,10 @@ function OfferDetail(): React.JSX.Element {
                 {curOffer.type}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
-                {curOffer.bedrooms} Bedrooms
+                {pluralize(curOffer?.bedrooms, 'Bedroom', 'Bedrooms')}
               </li>
               <li className="offer__feature offer__feature--adults">
-                Max {curOffer.maxAdults} adults
+                Max {pluralize(curOffer?.maxAdults, 'adult', 'adults')}
               </li>
             </ul>
             <div className="offer__price">
@@ -151,7 +163,7 @@ function OfferDetail(): React.JSX.Element {
             <div className="offer__host">
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
-                <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                <div className={classHostAvatar}>
                   <img
                     className="offer__avatar user__avatar"
                     src={curOffer.host.avatarUrl}
@@ -179,7 +191,7 @@ function OfferDetail(): React.JSX.Element {
             </section>
           </div>
         </div>
-        <Map className="offer__map" activeOffer={curOffer} offers={nearOffersMap} />
+        <Map city={curOffer.city} className="offer__map" activeOffer={curOffer} offers={nearOffersMap} />
       </section>
       <Offers nameBlock="Other places in the neighbourhood" offers={nearOffers} isOfferDetail />
     </main>

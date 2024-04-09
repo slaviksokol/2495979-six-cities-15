@@ -1,15 +1,32 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+
 import OfferCard from '../offers/offer-card';
 import {TOffersByCity} from '../../types';
+import {AppRoutes} from '../../const.ts';
+import {useActionCreators} from '../../store/hooks.ts';
+import {offersActions} from '../../store/slices/offers.ts';
 
 export default function FavoriteGroupCity({city, offers}: TOffersByCity): React.JSX.Element {
+  const {changeCity} = useActionCreators(offersActions);
+
+  const handleClick = React.useCallback(
+    () => {
+      changeCity(city.name);
+    },
+    [changeCity, city]
+  );
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="#">
+          <Link
+            className="locations__item-link"
+            to={AppRoutes.Main}
+            onClick={handleClick}
+          >
             <span>{city.name}</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="favorites__places">

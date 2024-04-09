@@ -1,6 +1,7 @@
-import {TCity, TComment, TOffer, TOffersByCity, TSortItem} from '../types';
+import {TComment, TOffer, TOffersByCity, TSortItem} from '../types';
 
 export function getRatingWidth(rating: number): string {
+  rating = Math.round(rating);
   return `${rating * (100 / 5)}%`;
 }
 
@@ -20,15 +21,6 @@ export function getOffersByCity(offers: TOffer[] | null): TOffersByCity[] {
   });
 
   return offersByCity;
-}
-
-export function getCitiesFromOffers(offers: TOffer[]): TCity[] {
-  const cities: TCity[] = [];
-  const offersByCity = getOffersByCity(offers);
-  offersByCity.forEach((city) => {
-    cities.push(city.city);
-  });
-  return cities;
 }
 
 export function getSortedOffers(offers: TOffer[], sortItem: TSortItem): TOffer[] {
@@ -66,7 +58,19 @@ export function getSortedComments(comments: TComment[]): TComment[] {
   return comments;
 }
 
-export function getRandomCity(cities: TCity[]): TCity {
+export function getRandomCity(cities: string[]): string {
   const randomIndex = Math.floor(Math.random() * cities.length);
   return cities[randomIndex];
 }
+
+export function capitalizeFirstLetter(string: string): string {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export const pluralize = (count: number | undefined, singular: string, plural: string): string => {
+  if (count === undefined) {
+    return `0 ${plural}`;
+  }
+
+  return `${count} ${count === 1 ? singular : plural}`;
+};

@@ -7,14 +7,14 @@ import {getOffersByCity} from '../../utils/func';
 import {useAppSelector} from '../../store/hooks';
 import {favoriteSelectors} from '../../store/slices/favorite';
 import {StatusLoading} from '../../const';
-import {Loader} from '../../components/loader';
+import {Loader} from '../../components/loader/loader';
 
 function Favorites(): React.JSX.Element {
   const favorites = useAppSelector(favoriteSelectors.selectFavorites);
   const statusLoading = useAppSelector(favoriteSelectors.selectFavoritesStatus);
   const offersByCity = getOffersByCity(favorites);
 
-  if (statusLoading !== StatusLoading.Success) {
+  if (statusLoading === StatusLoading.Loading) {
     return <Loader />;
   }
 

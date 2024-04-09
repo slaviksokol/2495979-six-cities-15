@@ -22,6 +22,7 @@ const userSlice = createSlice({
     builder
       .addCase(checkAuthAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthStatus.Auth;
+        state.statusLoading = StatusLoading.Success;
         const userData = action.payload;
         if (userData) {
           state.userData = userData;
@@ -29,6 +30,7 @@ const userSlice = createSlice({
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthStatus.NoAuth;
+        state.statusLoading = StatusLoading.Failed;
       })
       .addCase(loginAction.pending, (state) => {
         state.statusLoading = StatusLoading.Loading;
@@ -43,6 +45,7 @@ const userSlice = createSlice({
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthStatus.NoAuth;
+        state.statusLoading = StatusLoading.Success;
       }),
   initialState,
   name: 'user',

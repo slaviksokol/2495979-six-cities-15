@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {toast} from 'react-toastify';
 
 import {TOffer, TOfferDetail} from '../../types';
 import {State} from '../state';
@@ -27,6 +28,7 @@ const offerDetailSlice = createSlice({
       })
       .addCase(fetchOfferDetailAction.rejected, (state) => {
         state.statusLoading = StatusLoading.Failed;
+        toast.error('Offer not found');
       })
       .addCase(fetchOffersNearbyAction.fulfilled, (state, action) => {
         state.offersNearby = action.payload;

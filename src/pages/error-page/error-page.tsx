@@ -12,7 +12,7 @@ const ERROR_TYPES: {
   default: 'You have visited a non-existent page',
 };
 
-function Error404({type}: errorParamsType): React.JSX.Element {
+export default function ErrorPage({type}: errorParamsType): React.JSX.Element {
   let message = ERROR_TYPES.default;
 
   if (type && ERROR_TYPES[type]) {
@@ -29,5 +29,3 @@ function Error404({type}: errorParamsType): React.JSX.Element {
     </div>
   );
 }
-
-export default Error404;

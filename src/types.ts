@@ -58,12 +58,12 @@ export type TUserData = {
   name: string;
   avatarUrl: string;
   isPro: boolean;
-  email: string;
-  token: string;
+  email?: string;
+  token?: string;
 };
 
 export type TComment = {
-  id: number;
+  id: string;
   date: string;
   user: TUserData;
   comment: string;

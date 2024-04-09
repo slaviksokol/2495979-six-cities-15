@@ -1,17 +1,17 @@
 import React from 'react';
 
 import LocationItem from './location-item';
-import {TCity} from '../../types';
+import {CITIES} from '../../const.ts';
 
-export default function LocationList({cities}: {cities: TCity[]}): React.JSX.Element {
+export default function Location(): React.JSX.Element {
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">
         {
-          cities.map((city) => (
+          CITIES.map((cityName) => (
             <LocationItem
-              key={city.name}
-              city={city}
+              key={cityName}
+              cityName={cityName}
             />
           ))
         }
