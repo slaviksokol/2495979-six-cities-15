@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {toast} from 'react-toastify';
 
 import {TOffer, TSortItem} from '../../types';
-import {SortOptions} from '../../components/sort/const';
+import {sortOptions} from '../../components/sort/const';
 import {State} from '../state';
 import {fetchOffersAction} from '../thunks/offers';
 import {CITIES, StatusLoading,} from '../../const';
@@ -17,7 +17,7 @@ type TOffersState = {
 const initialState: TOffersState = {
   city: CITIES[0],
   offers: [],
-  sort: SortOptions[0],
+  sort: sortOptions[0],
   statusLoading: StatusLoading.None,
 };
 
@@ -54,7 +54,7 @@ const offersActions = {...offersSlice.actions, fetchOffersAction};
 const offersSelectors = {
   selectCity: (state: State) => state[offersSlice.name].city ?? null,
   selectOffers: (state: State) => state[offersSlice.name].offers ?? <TOffer[]>[],
-  selectSortItem: (state: State) => state[offersSlice.name].sort ?? SortOptions[0],
+  selectSortItem: (state: State) => state[offersSlice.name].sort ?? sortOptions[0],
   selectStatusLoading: (state: State) => state[offersSlice.name].statusLoading ?? StatusLoading.None,
 };
 

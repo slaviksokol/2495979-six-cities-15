@@ -3,12 +3,12 @@ import {Link} from 'react-router-dom';
 
 import {AppRoutes} from '../../const';
 
-type HeaderParams = {
+type THeaderParams = {
   logoLinkClassName: string;
   headerNav: React.JSX.Element | null;
 }
 
-export default function Header({logoLinkClassName, headerNav}: HeaderParams): React.JSX.Element {
+export default function Header({logoLinkClassName, headerNav}: THeaderParams): React.JSX.Element {
   return (
     <header className="header">
       <div className="container">

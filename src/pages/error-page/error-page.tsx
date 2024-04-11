@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-type errorParamsType = {
+type TErrorParamsType = {
   type: string;
 }
 
@@ -12,7 +12,7 @@ const ERROR_TYPES: {
   default: 'You have visited a non-existent page',
 };
 
-export default function ErrorPage({type}: errorParamsType): React.JSX.Element {
+export default function ErrorPage({type}: TErrorParamsType): React.JSX.Element {
   let message = ERROR_TYPES.default;
 
   if (type && ERROR_TYPES[type]) {

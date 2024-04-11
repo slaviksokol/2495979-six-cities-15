@@ -1,6 +1,6 @@
 import {TSortItem} from '../../types';
 
-export const SortOptions: TSortItem[] = [
+export const sortOptions: TSortItem[] = [
   {
     code: 'popular',
     name: 'Popular',

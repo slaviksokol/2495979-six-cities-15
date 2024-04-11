@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import classNames from 'classnames';
 
-import {SortOptions} from './const';
+import {sortOptions} from './const';
 import {useAppSelector} from '../../store/hooks';
 import {offersSelectors} from '../../store/slices/offers';
 import OffersSortItem from './sort-item';
@@ -30,7 +30,7 @@ export default function OffersSorting(): React.JSX.Element {
       </span>
       <ul className={classNames('places__options places__options--custom', {'places__options--opened': isShowSort})}>
         {
-          SortOptions.map((sort) => (
+          sortOptions.map((sort) => (
             <OffersSortItem
               key={sort.code}
               item={sort}
