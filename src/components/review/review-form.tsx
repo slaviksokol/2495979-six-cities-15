@@ -8,7 +8,7 @@ import {MAX_TEXT_COMMENT_LENGTH, MIN_TEXT_COMMENT_LENGTH, StatusLoading} from '.
 
 type TChangeHandler = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
-const RatingArray = [
+const ratingArray = [
   {value: 5, label: 'perfect'},
   {value: 4, label: 'good'},
   {value: 3, label: 'not bad'},
@@ -59,7 +59,7 @@ export default function ReviewForm(): React.JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
-          RatingArray.map(({value, label}) => (
+          ratingArray.map(({value, label}) => (
             <InputRadio
               key={value}
               value={value}

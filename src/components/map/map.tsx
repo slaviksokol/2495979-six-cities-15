@@ -3,7 +3,7 @@ import leaflet, {LayerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import {TCity, TOffer} from '../../types';
-import {CurrentCustomIcon, DefaultCustomIcon} from './consts';
+import {currentCustomIcon, defaultCustomIcon} from './consts';
 import useMap from './use-map';
 
 type TMap = {
@@ -34,7 +34,7 @@ export default function Map({city, className, offers, activeOffer}: TMap): React
             lat: offer.location.latitude,
             lng: offer.location.longitude
           },
-          {icon: activeOffer && offer.id === activeOffer.id ? CurrentCustomIcon : DefaultCustomIcon}
+          {icon: activeOffer && offer.id === activeOffer.id ? currentCustomIcon : defaultCustomIcon}
         )
           .addTo(markerLayer.current);
       });
