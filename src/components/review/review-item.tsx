@@ -1,6 +1,8 @@
 import React from 'react';
+
 import {TComment} from '../../types';
 import {getRatingWidth} from '../../utils/func';
+import {ItemLiYellow} from './review.style';
 
 export default function ReviewItem({review}: { review: TComment }): React.JSX.Element {
   const date = new Date(review.date);
@@ -8,7 +10,7 @@ export default function ReviewItem({review}: { review: TComment }): React.JSX.El
   const year = date.getFullYear();
 
   return (
-    <li className="reviews__item">
+    <ItemLiYellow className="reviews__item" primary='true' bordercolor={'yellow'}>
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
           <img
@@ -35,6 +37,6 @@ export default function ReviewItem({review}: { review: TComment }): React.JSX.El
         </p>
         <time className="reviews__time" dateTime={review.date}>{`${month} ${year}`}</time>
       </div>
-    </li>
+    </ItemLiYellow>
   );
 }

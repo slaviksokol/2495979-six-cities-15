@@ -4,6 +4,8 @@ import {Provider} from 'react-redux';
 import {HelmetProvider} from 'react-helmet-async';
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from 'react-toastify';
+import {GlobalStyle, theme} from './index.style.ts';
+import {ThemeProvider} from 'styled-components';
 
 import {store} from './store';
 import App from './components/app/app';
@@ -16,8 +18,11 @@ root.render(
   <React.StrictMode>
     <HelmetProvider>
       <Provider store={store} stabilityCheck="never">
-        <ToastContainer />
-        <App />
+        <ThemeProvider theme={theme.dark}>
+          <GlobalStyle/>
+          <ToastContainer />
+          <App />
+        </ThemeProvider>
       </Provider>
     </HelmetProvider>
   </React.StrictMode>
